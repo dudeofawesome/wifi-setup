@@ -1,0 +1,907 @@
+/* Main Primary color */
+/* Main Secondary color (1) */
+/* Main Secondary color (2) */
+/* Main Complement color */
+/* line 6, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material:focus {
+  outline: 0 !important; }
+
+/* line 11, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="button"].flat, .material[type="submit"].flat, .material[type="reset"].flat, button.material.flat {
+  min-width: 88px;
+  height: 36px;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 0px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+  padding-top: 7px;
+  transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  -webkit-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s; }
+  /* line 28, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].flat.light, .material[type="submit"].flat.light, .material[type="reset"].flat.light, button.material.flat.light {
+    color: #414141;
+    overflow: hidden; }
+    /* line 32, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.light:hover, .material[type="submit"].flat.light:hover, .material[type="reset"].flat.light:hover, button.material.flat.light:hover {
+      background-color: rgba(153, 153, 153, 0.2); }
+    /* line 35, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.light:active, .material[type="submit"].flat.light:active, .material[type="reset"].flat.light:active, button.material.flat.light:active {
+      background-color: rgba(153, 153, 153, 0.4); }
+    /* line 38, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.light:disabled, .material[type="submit"].flat.light:disabled, .material[type="reset"].flat.light:disabled, button.material.flat.light:disabled {
+      color: rgba(0, 0, 0, 0.26);
+      background-color: transparent !important; }
+  /* line 43, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].flat.dark, .material[type="submit"].flat.dark, .material[type="reset"].flat.dark, button.material.flat.dark {
+    color: white; }
+    /* line 46, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.dark:hover, .material[type="submit"].flat.dark:hover, .material[type="reset"].flat.dark:hover, button.material.flat.dark:hover {
+      background-color: rgba(204, 204, 204, 0.15); }
+    /* line 49, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.dark:active, .material[type="submit"].flat.dark:active, .material[type="reset"].flat.dark:active, button.material.flat.dark:active {
+      background-color: rgba(204, 204, 204, 0.25); }
+      /* line 52, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="button"].flat.dark:active::before, .material[type="submit"].flat.dark:active::before, .material[type="reset"].flat.dark:active::before, button.material.flat.dark:active::before {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 6px;
+        height: 6px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 2px; }
+      /* line 62, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="button"].flat.dark:active::after, .material[type="submit"].flat.dark:active::after, .material[type="reset"].flat.dark:active::after, button.material.flat.dark:active::after {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 6px;
+        height: 6px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 2px; }
+    /* line 73, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].flat.dark:disabled, .material[type="submit"].flat.dark:disabled, .material[type="reset"].flat.dark:disabled, button.material.flat.dark:disabled {
+      color: rgba(255, 255, 255, 0.3);
+      background-color: transparent !important; }
+
+/* line 82, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="button"].raised, .material[type="submit"].raised, .material[type="reset"].raised, button.material.raised {
+  min-width: 88px;
+  height: 36px;
+  border-radius: 2px;
+  border: 0px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+  padding-top: 7px;
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  -webkit-transition: background-color 0.2s, -webkit-box-shadow 0.2s, box-shadow 0.2s;
+  -moz-transition: background-color 0.2s, -moz-box-shadow 0.2s, box-shadow 0.2s;
+  -o-transition: background-color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s, -moz-box-shadow 0.2s, -webkit-box-shadow 0.2s; }
+  /* line 101, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].raised.light, .material[type="submit"].raised.light, .material[type="reset"].raised.light, button.material.raised.light {
+    color: #414141;
+    background-color: #e0e0e0; }
+    /* line 105, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].raised.light:active, .material[type="submit"].raised.light:active, .material[type="reset"].raised.light:active, button.material.raised.light:active {
+      background-color: #d6d6d6;
+      -webkit-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3); }
+    /* line 111, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].raised.light:disabled, .material[type="submit"].raised.light:disabled, .material[type="reset"].raised.light:disabled, button.material.raised.light:disabled {
+      color: rgba(0, 0, 0, 0.26);
+      background-color: rgba(0, 0, 0, 0.12); }
+  /* line 116, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].raised.dark, .material[type="submit"].raised.dark, .material[type="reset"].raised.dark, button.material.raised.dark {
+    color: white;
+    background-color: #115e43; }
+    /* line 120, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].raised.dark:active, .material[type="submit"].raised.dark:active, .material[type="reset"].raised.dark:active, button.material.raised.dark:active {
+      background-color: #198962;
+      -webkit-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3); }
+    /* line 126, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="button"].raised.dark:disabled, .material[type="submit"].raised.dark:disabled, .material[type="reset"].raised.dark:disabled, button.material.raised.dark:disabled {
+      color: rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.12); }
+  /* line 131, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].raised:disabled, .material[type="submit"].raised:disabled, .material[type="reset"].raised:disabled, button.material.raised:disabled {
+    -webkit-box-shadow: 0px 3px 6px transparent;
+    -moz-box-shadow: 0px 3px 6px transparent;
+    box-shadow: 0px 3px 6px transparent; }
+
+/* line 140, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="button"].floating, .material[type="submit"].floating, .material[type="reset"].floating, button.material.floating {
+  width: 56px;
+  height: 56px;
+  padding: 11px 17px 18px 17px;
+  background-color: #115e43;
+  color: white;
+  border-radius: 28px;
+  border: 0px;
+  text-transform: uppercase;
+  font-size: 26px;
+  letter-spacing: 0.5px;
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  -webkit-transition: background-color 0.2s, -webkit-box-shadow 0.2s, box-shadow 0.2s;
+  -moz-transition: background-color 0.2s, -moz-box-shadow 0.2s, box-shadow 0.2s;
+  -o-transition: background-color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s, -moz-box-shadow 0.2s, -webkit-box-shadow 0.2s; }
+  /* line 162, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating.light:active, .material[type="submit"].floating.light:active, .material[type="reset"].floating.light:active, button.material.floating.light:active {
+    background-color: #0f513a; }
+  /* line 165, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating.light:disabled, .material[type="submit"].floating.light:disabled, .material[type="reset"].floating.light:disabled, button.material.floating.light:disabled {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: #d1d1d1; }
+  /* line 171, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating.dark:active, .material[type="submit"].floating.dark:active, .material[type="reset"].floating.dark:active, button.material.floating.dark:active {
+    background-color: #198962; }
+  /* line 174, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating.dark:disabled, .material[type="submit"].floating.dark:disabled, .material[type="reset"].floating.dark:disabled, button.material.floating.dark:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    background-color: #4b4b4b; }
+  /* line 179, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating:active, .material[type="submit"].floating:active, .material[type="reset"].floating:active, button.material.floating:active {
+    background-color: #198962;
+    -webkit-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.3); }
+  /* line 185, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="button"].floating:disabled, .material[type="submit"].floating:disabled, .material[type="reset"].floating:disabled, button.material.floating:disabled {
+    -webkit-box-shadow: 0px 3px 6px transparent;
+    -moz-box-shadow: 0px 3px 6px transparent;
+    box-shadow: 0px 3px 6px transparent; }
+
+/* line 194, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="text"], .material[type="password"], .material[type="email"], .material[type="number"], .material[type="search"], .material[type="tel"], .material[type="url"] {
+  border: 0px;
+  background-color: transparent !important;
+  border-radius: 0px;
+  padding: 7px 2px 7px 2px;
+  font-size: 13px;
+  margin-bottom: 1px;
+  transition: border-bottom-color 0.2s;
+  -moz-transition: border-bottom-color 0.2s;
+  -webkit-transition: border-bottom-color 0.2s;
+  -o-transition: border-bottom-color 0.2s; }
+  /* line 207, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"].light, .material[type="password"].light, .material[type="email"].light, .material[type="number"].light, .material[type="search"].light, .material[type="tel"].light, .material[type="url"].light {
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5); }
+    /* line 211, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="text"].light:disabled, .material[type="password"].light:disabled, .material[type="email"].light:disabled, .material[type="number"].light:disabled, .material[type="search"].light:disabled, .material[type="tel"].light:disabled, .material[type="url"].light:disabled {
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.5); }
+  /* line 215, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"].dark, .material[type="password"].dark, .material[type="email"].dark, .material[type="number"].dark, .material[type="search"].dark, .material[type="tel"].dark, .material[type="url"].dark {
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4); }
+    /* line 219, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="text"].dark:disabled, .material[type="password"].dark:disabled, .material[type="email"].dark:disabled, .material[type="number"].dark:disabled, .material[type="search"].dark:disabled, .material[type="tel"].dark:disabled, .material[type="url"].dark:disabled {
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.4); }
+  /* line 223, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"]:hover, .material[type="password"]:hover, .material[type="email"]:hover, .material[type="number"]:hover, .material[type="search"]:hover, .material[type="tel"]:hover, .material[type="url"]:hover {
+    border-bottom: 1px solid rgba(17, 94, 67, 0.5); }
+  /* line 226, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"]:focus, .material[type="password"]:focus, .material[type="email"]:focus, .material[type="number"]:focus, .material[type="search"]:focus, .material[type="tel"]:focus, .material[type="url"]:focus {
+    border-bottom: 2px solid #115e43;
+    margin-bottom: 0px; }
+  /* line 230, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"]::-webkit-input-placeholder, .material[type="text"]:-moz-placeholder, .material[type="text"]::-moz-placeholder, .material[type="text"]:-ms-input-placeholder, .material[type="password"]::-webkit-input-placeholder, .material[type="password"]:-moz-placeholder, .material[type="password"]::-moz-placeholder, .material[type="password"]:-ms-input-placeholder, .material[type="email"]::-webkit-input-placeholder, .material[type="email"]:-moz-placeholder, .material[type="email"]::-moz-placeholder, .material[type="email"]:-ms-input-placeholder, .material[type="number"]::-webkit-input-placeholder, .material[type="number"]:-moz-placeholder, .material[type="number"]::-moz-placeholder, .material[type="number"]:-ms-input-placeholder, .material[type="search"]::-webkit-input-placeholder, .material[type="search"]:-moz-placeholder, .material[type="search"]::-moz-placeholder, .material[type="search"]:-ms-input-placeholder, .material[type="tel"]::-webkit-input-placeholder, .material[type="tel"]:-moz-placeholder, .material[type="tel"]::-moz-placeholder, .material[type="tel"]:-ms-input-placeholder, .material[type="url"]::-webkit-input-placeholder, .material[type="url"]:-moz-placeholder, .material[type="url"]::-moz-placeholder, .material[type="url"]:-ms-input-placeholder {
+    color: rgba(153, 153, 153, 0.8); }
+  /* line 233, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"]:-moz-placeholder, .material[type="text"]::-moz-placeholder, .material[type="password"]:-moz-placeholder, .material[type="password"]::-moz-placeholder, .material[type="email"]:-moz-placeholder, .material[type="email"]::-moz-placeholder, .material[type="number"]:-moz-placeholder, .material[type="number"]::-moz-placeholder, .material[type="search"]:-moz-placeholder, .material[type="search"]::-moz-placeholder, .material[type="tel"]:-moz-placeholder, .material[type="tel"]::-moz-placeholder, .material[type="url"]:-moz-placeholder, .material[type="url"]::-moz-placeholder {
+    opacity: 1; }
+  /* line 236, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"] + .error, .material[type="password"] + .error, .material[type="email"] + .error, .material[type="number"] + .error, .material[type="search"] + .error, .material[type="tel"] + .error, .material[type="url"] + .error {
+    display: none; }
+  /* line 239, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="text"][error], .material[type="password"][error], .material[type="email"][error], .material[type="number"][error], .material[type="search"][error], .material[type="tel"][error], .material[type="url"][error] {
+    border-bottom: 1px solid red; }
+    /* line 242, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="text"][error]:focus, .material[type="password"][error]:focus, .material[type="email"][error]:focus, .material[type="number"][error]:focus, .material[type="search"][error]:focus, .material[type="tel"][error]:focus, .material[type="url"][error]:focus {
+      border-bottom: 2px solid red; }
+    /* line 245, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="text"][error]:disabled, .material[type="password"][error]:disabled, .material[type="email"][error]:disabled, .material[type="number"][error]:disabled, .material[type="search"][error]:disabled, .material[type="tel"][error]:disabled, .material[type="url"][error]:disabled {
+      border-bottom: 1px dotted rgba(255, 0, 0, 0.4); }
+      /* line 248, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="text"][error]:disabled + .error, .material[type="password"][error]:disabled + .error, .material[type="email"][error]:disabled + .error, .material[type="number"][error]:disabled + .error, .material[type="search"][error]:disabled + .error, .material[type="tel"][error]:disabled + .error, .material[type="url"][error]:disabled + .error {
+        color: rgba(255, 0, 0, 0.4); }
+    /* line 252, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="text"][error] + .error, .material[type="password"][error] + .error, .material[type="email"][error] + .error, .material[type="number"][error] + .error, .material[type="search"][error] + .error, .material[type="tel"][error] + .error, .material[type="url"][error] + .error {
+      display: block;
+      position: relative;
+      top: 5px;
+      margin-bottom: -2px;
+      color: red;
+      font-size: 11px; }
+
+/* line 265, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+textarea.material {
+  border: 0px;
+  background-color: transparent;
+  border-radius: 0px;
+  padding: 7px 2px 7px 2px;
+  font-size: 13px;
+  margin-bottom: 0px;
+  transition: border-bottom 0.2s, margin-bottom 0.2s;
+  -moz-transition: border-bottom 0.2s, margin-bottom 0.2s;
+  -webkit-transition: border-bottom 0.2s, margin-bottom 0.2s;
+  -o-transition: border-bottom 0.2s, margin-bottom 0.2s; }
+  /* line 278, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material.light {
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5); }
+    /* line 282, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    textarea.material.light:disabled {
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.5); }
+  /* line 286, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material.dark {
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4); }
+    /* line 290, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    textarea.material.dark:disabled {
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.4); }
+  /* line 294, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material:hover {
+    border-bottom: 1px solid rgba(17, 94, 67, 0.5); }
+  /* line 297, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material:focus {
+    border-bottom: 2px solid #115e43; }
+  /* line 300, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material::-webkit-input-placeholder, textarea.material:-moz-placeholder, textarea.material::-moz-placeholder, textarea.material:-ms-input-placeholder {
+    color: rgba(153, 153, 153, 0.8); }
+  /* line 303, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material:-moz-placeholder, textarea.material::-moz-placeholder {
+    opacity: 1; }
+  /* line 306, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material + .error {
+    display: none; }
+  /* line 309, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  textarea.material[error] {
+    border-bottom: 1px solid red; }
+    /* line 312, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    textarea.material[error]:focus {
+      border-bottom: 2px solid red; }
+    /* line 315, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    textarea.material[error]:disabled {
+      border-bottom: 1px dotted rgba(255, 0, 0, 0.4); }
+      /* line 318, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      textarea.material[error]:disabled + .error {
+        color: rgba(255, 0, 0, 0.4); }
+    /* line 322, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    textarea.material[error] + .error {
+      display: block;
+      position: relative;
+      top: -4px;
+      color: red;
+      font-size: 11px; }
+
+/* line 334, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="checkbox"] {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+  appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  border-radius: 2px;
+  background-color: transparent;
+  transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -moz-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -webkit-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -o-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s; }
+  /* line 353, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="checkbox"].light {
+    border: 2px solid rgba(0, 0, 0, 0.54); }
+    /* line 356, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light + label {
+      color: rgba(0, 0, 0, 0.8); }
+    /* line 360, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light:checked::before {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 363, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light:checked::after {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 366, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light:checked:active {
+      box-shadow: 0px 0px 0px 14px rgba(0, 0, 0, 0.1); }
+    /* line 370, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light:active {
+      box-shadow: 0px 0px 0px 14px rgba(17, 94, 67, 0.2); }
+    /* line 373, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].light:disabled {
+      border: 2px solid rgba(0, 0, 0, 0.26); }
+      /* line 376, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="checkbox"].light:disabled:checked {
+        border: 0px solid transparent;
+        background-color: rgba(0, 0, 0, 0.26); }
+  /* line 382, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="checkbox"].dark {
+    border: 2px solid rgba(255, 255, 255, 0.7); }
+    /* line 385, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark + label {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 389, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark:checked::before {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 392, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark:checked::after {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 395, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark:checked:active {
+      box-shadow: 0px 0px 0px 14px rgba(255, 255, 255, 0.1); }
+    /* line 399, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark:active {
+      box-shadow: 0px 0px 0px 14px rgba(17, 94, 67, 0.2); }
+    /* line 402, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"].dark:disabled {
+      border: 2px solid rgba(255, 255, 255, 0.3); }
+      /* line 405, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="checkbox"].dark:disabled:checked {
+        border: 0px solid rgba(255, 255, 255, 0);
+        background-color: rgba(255, 255, 255, 0.3); }
+  /* line 411, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="checkbox"]:checked {
+    position: relative;
+    top: -6px;
+    text-align: center;
+    overflow: hidden;
+    vertical-align: middle;
+    border: 2px solid #115e43;
+    background-color: #115e43; }
+    /* line 420, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"]:checked::before {
+      position: relative;
+      display: inline-block;
+      top: -12px;
+      left: -9px;
+      transform: rotate(-45deg);
+      font-size: 22px;
+      content: "|"; }
+    /* line 429, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="checkbox"]:checked::after {
+      position: relative;
+      display: inline-block;
+      top: -39px;
+      left: 7px;
+      transform: rotate(45deg);
+      font-size: 22px;
+      content: "|"; }
+  /* line 441, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="checkbox"]:disabled:checked::before {
+    top: -9px; }
+  /* line 444, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="checkbox"]:disabled:checked::after {
+    top: -36px; }
+
+/* line 453, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material.switch > input[type="checkbox"] {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden; }
+  /* line 458, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"] + label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 2px;
+    width: 38px;
+    height: 14px;
+    background-color: rgba(0, 0, 0, 0.26);
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    -ms-border-radius: 60px;
+    -o-border-radius: 60px;
+    border-radius: 60px; }
+    /* line 477, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material.switch > input[type="checkbox"] + label::before, .material.switch > input[type="checkbox"] + label::after {
+      display: block;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      bottom: 1px;
+      content: ""; }
+    /* line 485, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material.switch > input[type="checkbox"] + label::before {
+      right: 1px;
+      background-color: rgba(0, 0, 0, 0.26);
+      -webkit-border-radius: 60px;
+      -moz-border-radius: 60px;
+      -ms-border-radius: 60px;
+      -o-border-radius: 60px;
+      border-radius: 60px;
+      -webkit-transition: background 0.4s;
+      -moz-transition: background 0.4s;
+      -o-transition: background 0.4s;
+      transition: background 0.4s; }
+    /* line 498, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material.switch > input[type="checkbox"] + label::after {
+      position: relative;
+      top: -5px;
+      left: -2px;
+      width: 20px;
+      height: 20px;
+      background-color: #fafafa;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      -ms-border-radius: 100%;
+      -o-border-radius: 100%;
+      border-radius: 100%;
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      -webkit-transition: margin 0.2s, background-color 0.2s, -webkit-box-shadow 0.2s;
+      -moz-transition: margin 0.2s, background-color 0.2s, -moz-box-shadow 0.2s;
+      -o-transition: margin 0.2s, background-color 0.2s, box-shadow 0.2s, -webkit-box-shadow 0.2s;
+      transition: margin 0.2s, background-color 0.2s, box-shadow 0.2s, -moz-box-shadow 0.2s, -webkit-box-shadow 0.2s; }
+  /* line 523, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"]:checked + label::before {
+    background-color: rgba(17, 94, 67, 0.5); }
+  /* line 526, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"]:checked + label::after {
+    background-color: #115e43;
+    margin-left: 18px;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3); }
+  /* line 536, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"]:disabled + label {
+    cursor: default; }
+    /* line 539, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material.switch > input[type="checkbox"]:disabled + label::before {
+      background-color: rgba(0, 0, 0, 0.12); }
+    /* line 542, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material.switch > input[type="checkbox"]:disabled + label::after {
+      background-color: #bdbdbd;
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+  /* line 552, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"]:disabled:checked + label::before {
+    background-color: rgba(0, 0, 0, 0.12); }
+  /* line 555, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material.switch > input[type="checkbox"]:disabled:checked + label::after {
+    background-color: #bdbdbd;
+    margin-left: 18px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+
+/* line 569, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+.material[type="radio"] {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+  margin: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -moz-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -webkit-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s;
+  -o-transition: box-shadow 0.2s, border 0.2s, background-color 0.2s; }
+  /* line 589, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="radio"].light {
+    border: 2px solid rgba(0, 0, 0, 0.54); }
+    /* line 592, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].light + label {
+      color: rgba(0, 0, 0, 0.8); }
+    /* line 596, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].light:checked {
+      border: 2px solid #115e43; }
+      /* line 599, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].light:checked::before {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 0px;
+        height: 0px;
+        border: 3px solid #115e43;
+        border-radius: 3px; }
+      /* line 609, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].light:checked:active {
+        box-shadow: 0px 0px 0px 11px rgba(0, 0, 0, 0.1); }
+      /* line 613, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].light:checked:disabled::before {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 0px;
+        height: 0px;
+        border: 3px solid rgba(0, 0, 0, 0.26);
+        border-radius: 3px; }
+    /* line 625, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].light:active {
+      box-shadow: 0px 0px 0px 11px rgba(17, 94, 67, 0.2); }
+    /* line 628, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].light:disabled {
+      border: 2px solid rgba(0, 0, 0, 0.26); }
+  /* line 632, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  .material[type="radio"].dark {
+    border: 2px solid rgba(255, 255, 255, 0.7); }
+    /* line 635, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].dark + label {
+      color: rgba(255, 255, 255, 0.8); }
+    /* line 639, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].dark:checked {
+      border: 2px solid #115e43; }
+      /* line 642, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].dark:checked::before {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 0px;
+        height: 0px;
+        border: 3px solid #115e43;
+        border-radius: 3px; }
+      /* line 652, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].dark:checked:active {
+        box-shadow: 0px 0px 0px 11px rgba(255, 255, 255, 0.1); }
+      /* line 656, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+      .material[type="radio"].dark:checked:disabled::before {
+        content: " ";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 0px;
+        height: 0px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 3px; }
+    /* line 668, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].dark:active {
+      box-shadow: 0px 0px 0px 11px rgba(17, 94, 67, 0.2); }
+    /* line 671, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+    .material[type="radio"].dark:disabled {
+      border: 2px solid rgba(255, 255, 255, 0.3); }
+
+/* line 679, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+input[type=range].material {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%; }
+  /* line 684, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 2px;
+    cursor: pointer;
+    animate: 0.2s;
+    -webkit-transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s;
+    -o-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    border: 0px;
+    -webkit-appearance: none; }
+  /* line 698, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-moz-range-track {
+    width: 100%;
+    height: 2px;
+    cursor: pointer;
+    animate: 0.2s;
+    -webkit-transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s;
+    -o-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    border: 0px; }
+  /* line 711, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-ms-track {
+    width: 100%;
+    height: 2px;
+    cursor: pointer;
+    animate: 0.2s;
+    -webkit-transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s;
+    -o-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    background: transparent;
+    border-color: transparent;
+    border-width: 2px 0;
+    color: transparent; }
+  /* line 741, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: -5px;
+    -webkit-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -moz-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -o-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -webkit-appearance: none; }
+  /* line 757, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: -5px;
+    -webkit-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -moz-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -o-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s, border 0.2s; }
+  /* line 771, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material::-ms-thumb {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: -5px;
+    -webkit-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -moz-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    -o-transition: background-color 0.2s, box-shadow 0.2s, border 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s, border 0.2s; }
+  /* line 786, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:focus {
+    outline: none; }
+  /* line 793, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:active::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px 14px rgba(17, 94, 67, 0.2); }
+  /* line 796, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:active::-moz-range-thumb {
+    box-shadow: 0px 0px 0px 14px rgba(17, 94, 67, 0.2); }
+  /* line 799, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:active::-ms-thumb {
+    box-shadow: 0px 0px 0px 14px rgba(17, 94, 67, 0.2); }
+  /* line 810, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled::-webkit-slider-thumb {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    margin-top: -3px; }
+  /* line 816, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled::-moz-range-thumb {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    margin-top: -3px; }
+  /* line 822, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled::-ms-thumb {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    margin-top: -3px; }
+  /* line 833, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled:active::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px 0px transparent; }
+  /* line 836, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled:active::-moz-range-thumb {
+    box-shadow: 0px 0px 0px 0px transparent; }
+  /* line 839, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material:disabled:active::-ms-thumb {
+    box-shadow: 0px 0px 0px 0px transparent; }
+  /* line 850, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-webkit-slider-runnable-track {
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 853, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-moz-range-track {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 857, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-ms-track, input[type=range].material.light::-ms-fill-lower, input[type=range].material.light::-ms-fill-upper {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 865, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-webkit-slider-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb; }
+  /* line 869, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-moz-range-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb; }
+  /* line 873, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light::-ms-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    background-color: #ebebeb; }
+  /* line 882, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-webkit-slider-runnable-track {
+    background-color: #115e43; }
+  /* line 885, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-moz-range-track {
+    background: #115e43;
+    background-color: #115e43; }
+  /* line 889, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-ms-track, input[type=range].material.light:active::-ms-fill-lower, input[type=range].material.light:active::-ms-fill-upper {
+    background: #115e43;
+    background-color: #115e43; }
+  /* line 897, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-webkit-slider-thumb {
+    border: 4px solid #115e43;
+    background-color: #115e43; }
+  /* line 901, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-moz-range-thumb {
+    border: 4px solid #115e43;
+    background-color: #115e43; }
+  /* line 905, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:active::-ms-thumb {
+    border: 4px solid #115e43;
+    background-color: #115e43; }
+  /* line 915, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-webkit-slider-runnable-track {
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 918, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-moz-range-track {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 922, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-ms-track, input[type=range].material.light:disabled::-ms-fill-lower, input[type=range].material.light:disabled::-ms-fill-upper {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 931, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-webkit-slider-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 936, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-moz-range-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 941, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled::-ms-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 951, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-webkit-slider-runnable-track {
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 954, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-moz-range-track {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 958, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-ms-track, input[type=range].material.light:disabled:active::-ms-fill-lower, input[type=range].material.light:disabled:active::-ms-fill-upper {
+    background: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26); }
+  /* line 967, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-webkit-slider-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 972, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-moz-range-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 977, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.light:disabled:active::-ms-thumb {
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    outline: 2px solid #ebebeb;
+    background-color: #ebebeb; }
+  /* line 990, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 993, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-moz-range-track {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 997, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-ms-fill-upper {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1005, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-webkit-slider-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: #333333; }
+  /* line 1009, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-moz-range-thumb, input[type=range].material.dark::-ms-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: #333333; }
+  /* line 1013, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark::-ms-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: #333333; }
+  /* line 1022, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-webkit-slider-runnable-track {
+    background-color: #093324; }
+  /* line 1025, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-moz-range-track {
+    background: #093324;
+    background-color: #093324; }
+  /* line 1029, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-ms-track, input[type=range].material.dark:active::-ms-fill-lower, input[type=range].material.dark:active::-ms-fill-upper {
+    background: #093324;
+    background-color: #093324; }
+  /* line 1037, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-webkit-slider-thumb {
+    border: 4px solid #093324;
+    background-color: #093324; }
+  /* line 1041, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-moz-range-thumb {
+    border: 4px solid #093324;
+    background-color: #093324; }
+  /* line 1045, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:active::-ms-thumb {
+    border: 4px solid #093324;
+    background-color: #093324; }
+  /* line 1055, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1058, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-moz-range-track {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1062, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-ms-track, input[type=range].material.dark:disabled::-ms-fill-lower, input[type=range].material.dark:disabled::-ms-fill-upper {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1071, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-webkit-slider-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+  /* line 1076, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-moz-range-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+  /* line 1081, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled::-ms-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+  /* line 1091, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1094, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-moz-range-track {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1098, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-ms-track, input[type=range].material.dark:disabled:active::-ms-fill-lower, input[type=range].material.dark:disabled:active::-ms-fill-upper {
+    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3); }
+  /* line 1107, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-webkit-slider-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+  /* line 1112, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-moz-range-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+  /* line 1117, /Users/dudeofawesome/Github/HackBrea-website/resources/styles/material.scss */
+  input[type=range].material.dark:disabled:active::-ms-thumb {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    outline: 2px solid #333333;
+    background-color: #333333; }
+
+/*# sourceMappingURL=material.css.map */

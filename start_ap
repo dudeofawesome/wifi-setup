@@ -1,0 +1,8 @@
+ifconfig wlan0 up 192.168.5.1 netmask 255.255.255.0
+sleep 5
+if [ "$(ps | grep udhcpd)" == "" ]; then
+udhcpd wlan0 &
+fi
+sleep 2
+hostapd /etc/hostapd/hostapd.conf 1>/dev/null
+killall udhcpd

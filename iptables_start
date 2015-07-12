@@ -1,0 +1,18 @@
+#!/bin/bash
+iptables --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+iptables --table nat -F
+iptables --table nat -X
+
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+
+iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+iptables -A FORWARD -i ppp0 -o wlan0 -j ACCEPT -m state --state RELATED,ESTABLISHED
+iptables -A FORWARD -i wlan0 -o ppp0 -j ACCEPT
+
+iptables -A INPUT -j DROP
+iptables -A OUTPUT -j DROP

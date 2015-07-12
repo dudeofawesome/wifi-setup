@@ -1,6 +1,6 @@
 String.prototype.replaceAll = function (find, replace) {
   return this.replace(new RegExp(find, 'g'), replace);
-}
+};
 
 
 
@@ -9,7 +9,7 @@ String.prototype.replaceAll = function (find, replace) {
 
 module.exports = {
 	start: function (_callbacks) {
-		if (callbacks != undefined)
+		if (callbacks !== undefined)
 			callbacks = _callbacks;
 
 		if (configured) {
@@ -20,7 +20,9 @@ module.exports = {
 	},
 	configure: function (SSID) {
 		startConfigServer();
-		startAP(SERVICE_NAME);
+        // var password = utils.generateStrongPassword(11, undefined, {lowercase: undefined, uppercase: undefined, numbers: undefined, symbols: "!@#$%^&*-_+=<.>?"});
+        var password = "testtest";
+		startAP(SERVICE_NAME, password);
 	},
 	resetConfiguration: function () {
 		configured = false;
@@ -44,12 +46,12 @@ var fs = require('fs');
 var configPage;
 var finishConfigPage;
 var utils = require("./lib/utils");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
-var sys = require('sys')
+}));
+var sys = require('sys');
 var exec = require('child_process').exec;
 
 function loadPages () {
@@ -61,76 +63,47 @@ function loadPages () {
 	finishConfigPage = finishConfigPage.replaceAll("{{SERVICE_NAME}}", SERVICE_NAME);
 }
 
-function startAP (SSID) {
-	var password = utils.generateStrongPassword(11, undefined, {lowercase: undefined, uppercase: undefined, numbers: undefined, symbols: "!@#$%^&*-_+=<.>?"});
-
+function startAP (SSID, password) {
 	if (fs.readFileSync("/etc/hostapd/hostapd.conf").toString().indexOf("# WiFi setup configuration") == -1) {
 		fs.renameSync("/etc/hostapd/hostapd.conf", "/etc/hostapd/hostapd.conf.back");
 	}
 
-	var hostapdConf = "# WiFi setup configuration\ninterface=wlan0\nssid={{SSID}}\nwpa_passphrase={{password}}\nhw_mode=g\nwpa=2\nwpa_key_mgmt=WPA-PSK WPA-EAP WPA-PSK-SHA256 WPA-EAP-SHA256"
+    // var hostapdConf = "# WiFi setup configuration\ninterface=wlan0\nssid={{SSID}}\nwpa_passphrase={{password}}\nhw_mode=g\nwpa=2\nwpa_key_mgmt=WPA-PSK WPA-EAP WPA-PSK-SHA256 WPA-EAP-SHA256";
+    var hostapdConf = fs.readFileSync('./hostapd.fill.conf').toString();
 	hostapdConf = hostapdConf.replaceAll("{{SSID}}", SSID);
 	hostapdConf = hostapdConf.replaceAll("{{password}}", password);
 	fs.writeFileSync("/etc/hostapd/hostapd.conf", hostapdConf);
 
-	exec("sysctl -w net.ipv4.ip_forward=1", function (error, stdout, stderr) {
-		console.log(error + "\n" + stdout + "\n" + stderr);
-		fs.writeFile("/etc/dhcp/dhcpd.conf", "subnet\n192.168.5.0 netmask 255.255.255.0 {\ninterface \"wlan0\";\n# — default gateway\noption routers\n192.168.5.1;\n# — Netmask\noption subnet-mask\n255.255.255.0;\n# — Broadcast Address\noption broadcast-address\n192.168.5.255;\n# — Domain name servers, tells the clients which DNS servers to use.\n#option domain-name-servers\n#10.0.0.1, 8.8.8.8, 8.8.4.4;\noption time-offset\n0;\n#range 10.0.0.3 10.0.0.13;\nrange 192.168.5.3 192.168.5.45;\ndefault-lease-time 1209600;\nmax-lease-time 1814400;\n}", function () {
-			exec("iptables --flush", function (error, stdout, stderr) {
-				exec("iptables --delete-chain", function (error, stdout, stderr) {
-					exec("iptables --table nat --delete-chain", function (error, stdout, stderr) {
-						exec("iptables --table nat -F", function (error, stdout, stderr) {
-							exec("iptables --table nat -X", function (error, stdout, stderr) {
-								exec("iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT", function (error, stdout, stderr) {
-									exec("iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT", function (error, stdout, stderr) {
-										exec("iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT", function (error, stdout, stderr) {
-											exec("iptables -A INPUT -p udp --dport 22 -j ACCEPT", function (error, stdout, stderr) {
-												exec("iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE", function (error, stdout, stderr) {
-													exec("iptables -A FORWARD -i ppp0 -o wlan0 -j ACCEPT -m state --state RELATED,ESTABLISHED", function (error, stdout, stderr) {
-														exec("iptables -A FORWARD -i wlan0 -o ppp0 -j ACCEPT", function (error, stdout, stderr) {
-															exec("iptables -A INPUT -j DROP", function (error, stdout, stderr) {
-																console.log(error + "\n" + stdout + "\n" + stderr);
-																fs.writeFileSync("./start_ap", "ifconfig wlan0 up 192.168.5.1 netmask 255.255.255.0\nsleep 5\nif [ \"$(ps | grep udhcpd)\" == \"\" ]; then\nudhcpd wlan0 &\nfi\nsleep 2\nhostapd /etc/hostapd/hostapd.conf 1>/dev/null\nkillall udhcpd");
-																fs.chmodSync("./start_ap", 0777);
-																exec("./start_ap", function (error, stdout, stderr) {
-																	console.log(error + "\n" + stdout + "\n" + stderr);
-																	if (callbacks.onAPstart != undefined) {
-																		callbacks.onAPstart(SSID, password);
-																	}
-																});
-															});
-														});
-													});
-												});
-											});
-										});
-									});
-								});
-							});
-						});
-					});
-				});
-			});
+    // exec("ifconfig wlan0 up", function (error, stdout, stderr) {
+    //     exec("iwconfig wlan0 mode ad-hoc", function (error, stdout, stderr) {
+    //         exec("iwconfig wlan0 essid " + SSID, function (error, stdout, stderr) {
+    //             exec("ifconfig wlan0 192.168.1.1 netmask 255.255.255.0", function (error, stdout, stderr) {
+    //                 console.log(error + "\n" + stdout + "\n" + stderr);
+    //                 // fs.writeFileSync("./start_ap", "ifconfig wlan0 up 192.168.5.1 netmask 255.255.255.0\nsleep 5\nif [ \"$(ps | grep udhcpd)\" == \"\" ]; then\nudhcpd wlan0 &\nfi\nsleep 2\nhostapd /etc/hostapd/hostapd.conf 1>/dev/null\nkillall udhcpd");
+    //                 // fs.chmodSync("./start_ap", 0777);
+    //                 // exec("./start_ap", function (error, stdout, stderr) {
+    //                 //   console.log(error + "\n" + stdout + "\n" + stderr);
+    //                     if (callbacks.onAPstart != undefined) {
+    //                         callbacks.onAPstart(SSID, password);
+    //                     }
+    //                 // });
+    //             }
+    //         }
+    //     }
+    // }
 
-			// fs.writeFileSync("./iptables_start", "#!/bin/bash\niptables --flush\niptables --delete-chain\niptables --table nat --delete-chain\niptables --table nat -F\niptables --table nat -X\n\niptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n\niptables -A OUTPUT -p tcp --dport 80 -j ACCEPT\niptables -A OUTPUT -p tcp --dport 443 -j ACCEPT\n\niptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE\niptables -A FORWARD -i ppp0 -o wlan0 -j ACCEPT -m state --state RELATED,ESTABLISHED\niptables -A FORWARD -i wlan0 -o ppp0 -j ACCEPT\n\niptables -A INPUT -j DROP\niptables -A OUTPUT -j DROP");
-			// fs.chmodSync("./iptables_start", 0777);
-			// exec("./iptables_start", function (error, stdout, stderr) {
-			// 	console.log(error + "\n" + stdout + "\n" + stderr);
-			// 	fs.writeFileSync("./start_ap", "ifconfig wlan0 up 192.168.5.1 netmask 255.255.255.0\nsleep 5\nif [ \"$(ps -e | grep udhcpd)\" == \"\" ]; then\nudhcpd wlan0 &\nfi\nsleep 2\nhostapd /etc/hostapd/hostapd.conf 1>/dev/null\nkillall udhcpd");
-			// 	fs.chmodSync("./start_ap", 0777);
-			// 	exec("./start_ap", function (error, stdout, stderr) {
-			// 		console.log(error + "\n" + stdout + "\n" + stderr);
-			// 		if (callbacks.onAPstart != undefined) {
-			// 			callbacks.onAPstart(SSID, password);
-			// 		}
-			// 	});
-			// });
-		});
-	});
+    exec("systemctl start hostapd", function (error, stdout, stderr) {
+        if (callbacks.onAPstart !== undefined) {
+            callbacks.onAPstart(SSID, password);
+        }
+    });
 }
 
-function stopAP () {
-	
+function stopAP (callback) {
+    exec("systemctl stop hostapd", function (error, stdout, stderr) {
+        console.log("WiFi AP stopped");
+        callback();
+    });
 }
 
 function startConfigServer () {
@@ -141,10 +114,10 @@ function startConfigServer () {
 		console.log('Listening on %s', port);
 	});
 
-	app.use(express.static("./pages/static"))
+	app.use(express.static("./pages/static"));
 	app.get('/', function (req, res) {
 		res.send(configPage);
-		if (callbacks.onClientConfiguring != undefined) {
+		if (callbacks.onClientConfiguring !== undefined) {
 			callbacks.onClientConfiguring(undefined);
 		}
 	});
@@ -153,7 +126,7 @@ function startConfigServer () {
 		serviceData = req.body;
 		configured = true;
 		res.send(finishConfigPage);
-		if (callbacks.onSetupComplete != undefined) {
+		if (callbacks.onSetupComplete !== undefined) {
 			callbacks.onSetupComplete(undefined);
 		}
 		module.exports.start();
@@ -161,16 +134,18 @@ function startConfigServer () {
 }
 
 function connectToWiFi () {
-	exec("iwconfig wlan0 essid " + serviceData.SSID + " key s:" + serviceData.password, function (error, stdout, stderr) {
-		exec("dhclient wlan0", function (error, stdout, stderr) {
-			serviceData.internalIP = stdout;
-			console.log(stdout);
-			if (callbacks.onConnectToWIFI != undefined) {
-				callbacks.onConnectToWIFI(serviceData.SSID, serviceData.internalIP);
-			}
-		});
-		sys.puts(stdout);
-	});
+    stopAP(function () {
+        exec("iwconfig wlan0 essid " + serviceData.SSID + " key s:" + serviceData.password, function (error, stdout, stderr) {
+    		exec("dhclient wlan0", function (error, stdout, stderr) {
+    			serviceData.internalIP = stdout;
+    			console.log(stdout);
+    			if (callbacks !== undefined && callbacks.onConnectToWIFI !== undefined) {
+    				callbacks.onConnectToWIFI(serviceData.SSID, serviceData.internalIP);
+    			}
+    		});
+    		sys.puts(stdout);
+    	});
+    });
 }
 
 function disconnectWiFi () {

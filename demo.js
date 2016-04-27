@@ -1,4 +1,4 @@
-var lcd = require("./LCD_controller");
+var lcd = require("lcd-controller");
 lcd.setColor(0, 100, 255);
 // var dots = "";
 // var startingText = setInterval(function () {
@@ -8,11 +8,10 @@ lcd.setColor(0, 100, 255);
 // 		dots = "";
 // }, 500);
 
-var WIFIsetup = require("./WIFI_setup");
-var utils = require("./lib/utils");
+var WIFIsetup = require("./main");
 
 WIFIsetup.start({
-	onAPstart: function (SSID, password) {		
+	onAPstart: function (SSID, password) {
 		lcd.setText("SSID:" + SSID);
 		lcd.setText("Pass:" + password, {x:0, y:1}, false);
 	},

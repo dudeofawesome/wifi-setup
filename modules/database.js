@@ -9,7 +9,7 @@ var db = [
 module.exports = {
     init: function () {
         return new Promise(function (resolve, reject) {
-            let path;
+            var path;
             switch (process.platform) {
                 case 'darwin':
                     path = os.homedir() + '/Library/Application Support/io.orleans.musicly/settings';

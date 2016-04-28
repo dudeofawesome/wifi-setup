@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
-var utils = require('./modules/utils');
+var utils = require('./utils');
 
 module.exports = function () {
     var wifi = {

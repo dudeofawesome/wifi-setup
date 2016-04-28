@@ -21,6 +21,8 @@ module.exports = function () {
             up: function (SSID, password) {
                 return new Promise(function (resolve) {
                     console.log('Turning AP on');
+                    console.log('SSID: ' + SSID);
+                    console.log('password: ' + password);
                     if (wifi.client.status !== 'down') {
                         resolve();
                     } else {
@@ -82,13 +84,17 @@ module.exports = function () {
                     if (wifi.accessPoint.status !== 'down') {
                         reject();
                     } else {
-                        exec('iwconfig wlan0 essid ' + SSID + ' key s:' + password, function (error, stdout) {
-                            exec('dhclient wlan0', function () {
-                                console.log(stdout);
-                                wifi.client.status = 'connected';
-                                resolve(stdout);
-                            });
-                            sys.puts(stdout);
+                        exec('ifconfig wlan0 up && iwconfig wlan0 essid ' + SSID + ' key s:' + password, function (err, stdout) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                exec('dhclient wlan0', function () {
+                                    console.log(stdout);
+                                    wifi.client.status = 'connected';
+                                    resolve(stdout);
+                                });
+                                sys.puts(stdout);
+                            }
                         });
                     }
                 });

@@ -1,4 +1,8 @@
-var lcd = require('lcd-controller');
+// var lcd = require('lcd-controller');
+var lcd = {
+    setColor: function () {},
+    setText: function (text) {console.log(text)}
+}
 lcd.setColor(0, 100, 255);
 
 var WIFIsetup = require('./main')('DEFAULT');

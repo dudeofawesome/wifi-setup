@@ -33,7 +33,6 @@ module.exports = function (SERVICE_NAME, express, app, database) {
             database.start();
         });
     }
-    console.log(app);
 
     var wifiSetup = {
         init: function (callbacks) {

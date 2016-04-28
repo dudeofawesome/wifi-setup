@@ -3,14 +3,14 @@ var fs = require('fs');
 var SERVICE_NAME = 'DEFAULT';
 
 module.exports = function (callbacks) {
-    var app;
-    var appServer;
-
     var server = {
+        app: undefined,
+        appServer: undefined,
+
         init: function (express, app) {
             return new Promise(function (resolve) {
                 console.log('Initializing server');
-                module.exports.app = app;
+                server.app = app;
 
                 var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
                 configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
@@ -44,8 +44,8 @@ module.exports = function (callbacks) {
         start: function (port) {
             return new Promise(function (resolve) {
                 console.log('Starting server');
-                appServer = app.listen(port, function () {
-                    console.log('Listening on ' + appServer.address().port);
+                server.appServer = server.app.listen(port, function () {
+                    console.log('Listening on ' + server.appServer.address().port);
                     resolve();
                 });
             });
@@ -53,8 +53,8 @@ module.exports = function (callbacks) {
         stop: function () {
             return new Promise(function (resolve) {
                 console.log('Stopping server');
-                if (appServer) {
-                    appServer.close();
+                if (server.appServer) {
+                    server.appServer.close();
                 }
 
                 resolve();

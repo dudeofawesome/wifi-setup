@@ -1,5 +1,4 @@
 var exec = require('child_process').exec;
-var sys = require('sys');
 var fs = require('fs');
 
 module.exports = function () {
@@ -93,7 +92,7 @@ module.exports = function () {
                                     wifi.client.status = 'connected';
                                     resolve(stdout);
                                 });
-                                sys.puts(stdout);
+                                console.log(stdout);
                             }
                         });
                     }

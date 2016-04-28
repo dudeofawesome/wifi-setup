@@ -23,7 +23,7 @@ module.exports = {
                 default:
                     path = os.homedir() + '/usr/local/share/io.orleans.musicly/settings';
             }
-            db.forEach((collection) => {
+            db.forEach(function (collection) {
                 db[collection] = new nedb({filename: path + '/' + collection});
             });
 

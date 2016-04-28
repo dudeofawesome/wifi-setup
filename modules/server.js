@@ -29,8 +29,6 @@ module.exports = function (callbacks) {
 
                 app.post('/finishConfig/', function (req, res) {
                     console.log(req.body);
-                    serviceData = req.body;
-                    configured = true;
                     res.send(finishConfigPage);
                     if (callbacks && callbacks.onSetupComplete) {
                         callbacks.onSetupComplete(req.body);

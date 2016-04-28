@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": ">=0.10.38"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dudeofawesome/wifi-setup.git"
@@ -24,7 +27,9 @@
   "homepage": "https://github.com/dudeofawesome/wifi-setup",
   "dependencies": {
     "body-parser": "^1.12.3",
+    "es6-promise": "^3.1.2",
     "express": "^4.12.3",
-    "lcd-controller": "^1.0.1"
+    "lcd-controller": "^1.0.1",
+    "nedb": "^1.8.0"
   }
 }

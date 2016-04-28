@@ -1,3 +1,10 @@
+# interface=wlan0
+# ssid={{SSID}}
+# hw_mode=g
+# wpa=2
+# wpa_passphrase={{password}}
+# wpa_key_mgmt=WPA-PSK WPA-EAP WPA-PSK-SHA256 WPA-EAP-SHA256
+
 interface=wlan0
 logger_syslog=-1
 logger_syslog_level=2

@@ -25,11 +25,15 @@ module.exports = function () {
                     if (wifi.client.status !== 'down') {
                         resolve();
                     } else {
-                        if (fs.readFileSync('/etc/hostapd/hostapd.conf').toString().indexOf('# WiFi setup configuration') == -1) {
-                            fs.renameSync('/etc/hostapd/hostapd.conf', '/etc/hostapd/hostapd.conf.back');
+                        var hostapdPath = '/etc/hostapd/hostapd.conf';
+
+                        // Backup old hostapd.conf
+                        if (fs.statSync(hostapdPath).isFile()) {
+                            if (fs.readFileSync(hostapdPath).toString().indexOf('# WiFi setup configuration') == -1) {
+                                fs.renameSync(hostapdPath, hostapdPath + '.back');
+                            }
                         }
 
-                        // var hostapdConf = '# WiFi setup configuration\ninterface=wlan0\nssid={{SSID}}\nwpa_passphrase={{password}}\nhw_mode=g\nwpa=2\nwpa_key_mgmt=WPA-PSK WPA-EAP WPA-PSK-SHA256 WPA-EAP-SHA256';
                         var hostapdConf = fs.readFileSync('./modules/hostapd.fill.conf').toString();
                         hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                         hostapdConf = hostapdConf.replaceAll('{{password}}', password);

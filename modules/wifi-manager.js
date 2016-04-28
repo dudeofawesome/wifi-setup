@@ -28,11 +28,11 @@ module.exports = function () {
                         var hostapdPath = '/etc/hostapd/hostapd.conf';
 
                         // Backup old hostapd.conf
-                        if (fs.statSync(hostapdPath).isFile()) {
+                        try {
                             if (fs.readFileSync(hostapdPath).toString().indexOf('# WiFi setup configuration') == -1) {
                                 fs.renameSync(hostapdPath, hostapdPath + '.back');
                             }
-                        }
+                        } catch (e) {}
 
                         var hostapdConf = fs.readFileSync('./modules/hostapd.fill.conf').toString();
                         hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);

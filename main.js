@@ -62,18 +62,10 @@ module.exports = function (SERVICE_NAME, express, app, database) {
                         }
                     }).catch(function (err) {
                         console.log(err);
-                        Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
-                            if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
-                                module.exports.callbacks.onAPstart(SSID, password);
-                            }
-                        });
+                        wifiSetup.startConfigServer();
                     });
                 } else {
-                    Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
-                        if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
-                            module.exports.callbacks.onAPstart(SSID, password);
-                        }
-                    });
+                    wifiSetup.startConfigServer();
                 }
 
                 resolve();
@@ -87,6 +79,16 @@ module.exports = function (SERVICE_NAME, express, app, database) {
                     console.log('Something failed to stop');
                     console.log(errs);
                 });
+            });
+        },
+
+        startConfigServer: function () {
+            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
+                if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
+                    module.exports.callbacks.onAPstart(SSID, password);
+                }
+            }).catch(function (errs) {
+                console.log(errs);
             });
         }
     };

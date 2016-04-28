@@ -18,7 +18,7 @@ module.exports = function (callbacks) {
                 var finishConfigPage = fs.readFileSync('./modules/pages/finish_configure.html').toString();
                 finishConfigPage = finishConfigPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
 
-                app.use(express.static('./pages/static'));
+                app.use(express.static('./modules/pages/static'));
 
                 app.get('/', function (req, res) {
                     res.send(configPage);

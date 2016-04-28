@@ -34,7 +34,7 @@ module.exports = function () {
                             }
                         } catch (e) {}
 
-                        var hostapdConf = fs.readFileSync('./modules/hostapd.fill.conf').toString();
+                        var hostapdConf = fs.readFileSync('./hostapd.fill.conf').toString();
                         hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                         hostapdConf = hostapdConf.replaceAll('{{password}}', password);
                         fs.writeFileSync('/etc/hostapd/hostapd.conf', hostapdConf);

@@ -30,7 +30,7 @@ module.exports = function () {
                         }
 
                         // var hostapdConf = '# WiFi setup configuration\ninterface=wlan0\nssid={{SSID}}\nwpa_passphrase={{password}}\nhw_mode=g\nwpa=2\nwpa_key_mgmt=WPA-PSK WPA-EAP WPA-PSK-SHA256 WPA-EAP-SHA256';
-                        var hostapdConf = fs.readFileSync('./hostapd.fill.conf').toString();
+                        var hostapdConf = fs.readFileSync('./modules/hostapd.fill.conf').toString();
                         hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                         hostapdConf = hostapdConf.replaceAll('{{password}}', password);
                         fs.writeFileSync('/etc/hostapd/hostapd.conf', hostapdConf);

@@ -8,7 +8,7 @@ var db = [
 
 module.exports = {
     init: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             let path;
             switch (process.platform) {
                 case 'darwin':
@@ -31,8 +31,8 @@ module.exports = {
         });
     },
     start: function () {
-        return new Promise((resolve, reject) => {
-            db.services.loadDatabase((err) => {
+        return new Promise(function (resolve, reject) {
+            db.services.loadDatabase(function (err) {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -44,14 +44,14 @@ module.exports = {
         });
     },
     stop: function () {
-        return new Promise((resolve, reject) => {
+        return new Promise(function (resolve, reject) {
             resolve();
         });
     },
 
-    getToken: (serviceName) => {
-        return new Promise((resolve, reject) => {
-            db.services.findOne({name: serviceName}, {token: 1}, (err, service) => {
+    getToken: function (serviceName) {
+        return new Promise(function (resolve, reject) {
+            db.services.findOne({name: serviceName}, {token: 1}, function (err, service) {
                 if (err || !service) {
                     console.log(err);
                     reject(err);
@@ -61,9 +61,9 @@ module.exports = {
             });
         });
     },
-    setToken: (serviceName, token) => {
-        return new Promise((resolve, reject) => {
-            db.services.update({name: serviceName}, {$set: {token: token}}, {upsert: true}, (err) => {
+    setToken: function (serviceName, token) {
+        return new Promise(function (resolve, reject) {
+            db.services.update({name: serviceName}, {$set: {token: token}}, {upsert: true}, function (err) {
                 if (err) {
                     reject(err);
                 } else {

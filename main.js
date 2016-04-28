@@ -12,9 +12,10 @@ var bodyParser = require('body-parser');
 var wifiManager = require('./modules/wifi-manager')();
 var server = require('./modules/server')({
     onClientConfiguring: function () {
-
+        console.log('onClientConfiguring');
     },
     onSetupComplete: function (settings) {
+        console.log('onSetupComplete');
         console.log(settings);
     }
 });
@@ -32,6 +33,7 @@ module.exports = function (SERVICE_NAME, express, app, database) {
             database.start();
         });
     }
+    console.log(app);
 
     var wifiSetup = {
         init: function (callbacks) {

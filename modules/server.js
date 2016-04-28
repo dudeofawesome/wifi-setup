@@ -2,11 +2,11 @@ var fs = require('fs');
 
 var SERVICE_NAME = 'DEFAULT';
 
-module.exports = function (callbacks, express, app) {
+module.exports = function (callbacks) {
     var appServer;
 
     var server = {
-        init: function () {
+        init: function (express, app) {
             return new Promise(function (resolve) {
                 var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
                 configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
@@ -57,4 +57,4 @@ module.exports = function (callbacks, express, app) {
     };
 
     return server;
-}
+};

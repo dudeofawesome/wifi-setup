@@ -45,7 +45,7 @@ module.exports = function (SERVICE_NAME, express, app, database) {
                     extended: true
                 }));
 
-                Promise.all([wifiManager.init(), server.init()]).then(function () {
+                Promise.all([wifiManager.init(), server.init(express, app)]).then(function () {
                     resolve();
                 }).catch(function (errs) {
                     console.log('Something failed to initialize');

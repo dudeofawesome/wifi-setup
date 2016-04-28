@@ -62,14 +62,14 @@ module.exports = function (SERVICE_NAME, express, app, database) {
                         }
                     }).catch(function (err) {
                         console.log(err);
-                        wifiManager.accessPoint.up(SERVICE_NAME, 'testtest').then(function (SSID, password) {
+                        Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
                             if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
                                 module.exports.callbacks.onAPstart(SSID, password);
                             }
                         });
                     });
                 } else {
-                    wifiManager.accessPoint.up(SERVICE_NAME, 'testtest').then(function (SSID, password) {
+                    Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
                         if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
                             module.exports.callbacks.onAPstart(SSID, password);
                         }

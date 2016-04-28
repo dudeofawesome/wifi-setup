@@ -3,12 +3,15 @@ var fs = require('fs');
 var SERVICE_NAME = 'DEFAULT';
 
 module.exports = function (callbacks) {
+    var app;
     var appServer;
 
     var server = {
         init: function (express, app) {
             return new Promise(function (resolve) {
                 console.log('Initializing server');
+                module.exports.app = app;
+
                 var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
                 configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
 

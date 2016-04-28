@@ -7,30 +7,30 @@ var db = [
 ];
 
 module.exports = {
-    init: () => {
+    init: function () {
         return new Promise((resolve, reject) => {
             let path;
             switch (process.platform) {
                 case 'darwin':
-                    path = `${os.homedir()}/Library/Application Support/io.orleans.musicly/settings`;
+                    path = os.homedir() + '/Library/Application Support/io.orleans.musicly/settings';
                     break;
                 case 'linux':
-                    path = `${os.homedir()}/usr/local/share/io.orleans.musicly/settings`;
+                    path = os.homedir() + '/usr/local/share/io.orleans.musicly/settings';
                     break;
                 case 'win32':
-                    path = `${os.homedir()}/AppData/Local/io.orleans.musicly/settings`;
+                    path = os.homedir() + '/AppData/Local/io.orleans.musicly/settings';
                     break;
                 default:
-                    path = `${os.homedir()}/usr/local/share/io.orleans.musicly/settings`;
+                    path = os.homedir() + '/usr/local/share/io.orleans.musicly/settings';
             }
             db.forEach((collection) => {
-                db[collection] = new nedb({filename: `${path}/${collection}`});
+                db[collection] = new nedb({filename: path + '/' + collection});
             });
 
             resolve();
         });
     },
-    start: () => {
+    start: function () {
         return new Promise((resolve, reject) => {
             db.services.loadDatabase((err) => {
                 if (err) {
@@ -43,7 +43,7 @@ module.exports = {
             });
         });
     },
-    stop: () => {
+    stop: function () {
         return new Promise((resolve, reject) => {
             resolve();
         });

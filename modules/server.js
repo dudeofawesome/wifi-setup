@@ -8,10 +8,10 @@ module.exports = function (callbacks, express, app) {
     var server = {
         init: function () {
             return new Promise(function (resolve) {
-                var configPage = fs.readFileSync('./pages/configure.html').toString();
+                var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
                 configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
 
-                var finishConfigPage = fs.readFileSync('./pages/finish_configure.html').toString();
+                var finishConfigPage = fs.readFileSync('./modules/pages/finish_configure.html').toString();
                 finishConfigPage = finishConfigPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
 
                 app.use(express.static('./pages/static'));

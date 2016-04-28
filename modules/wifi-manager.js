@@ -20,6 +20,7 @@ module.exports = function () {
             status: 'down',
             up: function (SSID, password) {
                 return new Promise(function (resolve) {
+                    console.log('Turning AP on');
                     if (wifi.client.status !== 'down') {
                         resolve();
                     } else {
@@ -60,6 +61,7 @@ module.exports = function () {
             },
             down: function () {
                 return new Promise(function (resolve) {
+                    console.log('Turning AP off');
                     if (wifi.accessPoint.status === 'up') {
                         exec('systemctl stop hostapd', function () {
                             console.log('WiFi AP stopped');
@@ -76,6 +78,7 @@ module.exports = function () {
             status: 'down',
             connect: function (SSID, password) {
                 return new Promise(function (resolve, reject) {
+                    console.log('Connecting to ' + SSID);
                     if (wifi.accessPoint.status !== 'down') {
                         reject();
                     } else {
@@ -92,6 +95,7 @@ module.exports = function () {
             },
             disconnect: function () {
                 return new Promise(function (resolve) {
+                    console.log('Disconnecting WiFi');
                     wifi.client.status = 'down';
                     resolve();
                 });

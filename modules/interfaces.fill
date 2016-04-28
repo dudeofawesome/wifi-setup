@@ -1,9 +1,17 @@
+# wifi-setup config
+
 # interfaces(5) file used by ifup(8) and ifdown(8)
 auto lo
 iface lo inet loopback
 
+auto usb0
+iface usb0 inet static
+    address 192.168.2.15
+    netmask 255.255.255.0
+
 auto wlan0
+# And the following 4 lines are for when using hostapd...
 iface wlan0 inet static
-hostapd /etc/hostapd/hostapd.conf
-address 192.168.8.1
-netmask 255.255.255.0
+   hostapd {{hostapd}}
+   address {{IP}}
+   netmask 255.255.255.0

@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
+var utils = require('./modules/utils');
 
 module.exports = function () {
     var wifi = {
@@ -29,15 +30,29 @@ module.exports = function () {
 
                         // Backup old hostapd.conf
                         try {
-                            if (fs.readFileSync(hostapdPath).toString().indexOf('# WiFi setup configuration') == -1) {
-                                fs.renameSync(hostapdPath, hostapdPath + '.back');
+                            if (fs.readFileSync(hostapdPath).toString().indexOf('# wifi-setup config') === -1) {
+                                utils.backupFile(hostapdPath);
                             }
                         } catch (e) {}
 
                         var hostapdConf = fs.readFileSync('./modules/hostapd.conf.fill').toString();
                         hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                         hostapdConf = hostapdConf.replaceAll('{{password}}', password);
-                        fs.writeFileSync('/etc/hostapd/hostapd.conf', hostapdConf);
+                        fs.writeFileSync(hostapdPath, hostapdConf);
+
+                        var interfacesPath = '/etc/network/interfaces';
+
+                        // Backup old hostapd.conf
+                        try {
+                            if (fs.readFileSync(interfacesPath).toString().indexOf('# wifi-setup config') === -1) {
+                                utils.backupFile(interfacesPath);
+                            }
+                        } catch (e) {}
+
+                        var interfaces = fs.readFileSync('./modules/interfaces.fill').toString();
+                        interfaces = interfaces.replaceAll('{{IP}}', '192.168.42.1');
+                        interfaces = interfaces.replaceAll('{{hostapd}}', hostapdPath);
+                        fs.writeFileSync(interfacesPath, interfaces);
 
                         // exec('ifconfig wlan0 up', function (error, stdout, stderr) {
                         //     exec('iwconfig wlan0 mode ad-hoc', function (error, stdout, stderr) {
@@ -57,9 +72,14 @@ module.exports = function () {
                         //     }
                         // }
 
-                        exec('systemctl start hostapd', function () {
-                            wifi.accessPoint.status = 'up';
-                            resolve({SSID: SSID, password: password});
+                        exec('/etc/init.d/hostapd restart', function (err, stdout) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log(stdout);
+                                wifi.accessPoint.status = 'up';
+                                resolve({SSID: SSID, password: password});
+                            }
                         });
                     }
                 });

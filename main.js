@@ -63,10 +63,13 @@ module.exports = function (SERVICE_NAME, express, app, database) {
         start: function () {
             return new Promise(function (resolve) {
                 if (configured) {
-                    wifiManager.client.connect('TODO', 'get from DB!!!').then(function (SSID, IP) {
-                        if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
-                            module.exports.callbacks.onConnectToWIFI(SSID, IP);
+                    wifiManager.client.connect('TODO', 'get from DB!!!').then(function (err) {
+                        if (!err) {
+                            if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
+                                module.exports.callbacks.onConnectToWIFI('TODO', '10.0.0.1');
+                            }
                         }
+                        console.log(err);
                     }).catch(function (err) {
                         console.log(err);
                         wifiSetup.startConfigServer();

@@ -30,5 +30,9 @@ WIFIsetup.init({
         lcd.setText('IP:' + internalIP, {x:0, y:1}, false);
     }
 }).then(function () {
-    WIFIsetup.start();
+    WIFIsetup.start().catch(function (err) {
+        console.log(err);
+    });
+}).catch(function (err) {
+    console.log(err);
 });

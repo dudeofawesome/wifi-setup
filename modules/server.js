@@ -35,7 +35,6 @@ module.exports = function (callbacks) {
                     if (callbacks && callbacks.onSetupComplete) {
                         callbacks.onSetupComplete(req.body);
                     }
-                    module.exports.start();
                 });
 
                 resolve();

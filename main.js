@@ -17,6 +17,9 @@ var server = require('./modules/server')({
     onSetupComplete: function (settings) {
         console.log('onSetupComplete');
         console.log(settings);
+        wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function (output) {
+            console.log(output);
+        });
     }
 });
 

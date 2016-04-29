@@ -26,9 +26,20 @@ module.exports = function () {
                     if (wifi.client.status !== 'down') {
                         resolve();
                     } else {
+                        var defaultHostapdPath = '/etc/default/hostapd';
                         var hostapdPath = '/etc/hostapd/hostapd.conf';
+                        var interfacesPath = '/etc/network/interfaces';
 
-                        // Backup old hostapd.conf
+                        try {
+                            if (fs.readFileSync(defaultHostapdPath).toString().indexOf('# wifi-setup config') === -1) {
+                                utils.backupFile(defaultHostapdPath);
+                            }
+                        } catch (e) {}
+
+                        var defaultHostapdConf = fs.readFileSync('./modules/hostapd.fill').toString();
+                        defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', hostapdPath);
+                        fs.writeFileSync(defaultHostapdPath, defaultHostapdConf);
+
                         try {
                             if (fs.readFileSync(hostapdPath).toString().indexOf('# wifi-setup config') === -1) {
                                 utils.backupFile(hostapdPath);
@@ -40,9 +51,6 @@ module.exports = function () {
                         hostapdConf = hostapdConf.replaceAll('{{password}}', password);
                         fs.writeFileSync(hostapdPath, hostapdConf);
 
-                        var interfacesPath = '/etc/network/interfaces';
-
-                        // Backup old hostapd.conf
                         try {
                             if (fs.readFileSync(interfacesPath).toString().indexOf('# wifi-setup config') === -1) {
                                 utils.backupFile(interfacesPath);
@@ -75,7 +83,7 @@ module.exports = function () {
                 return new Promise(function (resolve) {
                     console.log('Turning AP off');
                     if (wifi.accessPoint.status === 'up') {
-                        exec('systemctl stop hostapd', function () {
+                        exec('/etc/init.d/hostapd stop', function () {
                             console.log('WiFi AP stopped');
                             wifi.accessPoint.status = 'down';
                             resolve();
@@ -112,6 +120,11 @@ module.exports = function () {
             disconnect: function () {
                 return new Promise(function (resolve) {
                     console.log('Disconnecting WiFi');
+                    exec('ifdown wlan0', function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
                     wifi.client.status = 'down';
                     resolve();
                 });

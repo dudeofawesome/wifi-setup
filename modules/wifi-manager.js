@@ -68,11 +68,18 @@ module.exports = function () {
                         exec('ifconfig wlan0 up && iwconfig wlan0 essid ' + SSID + ' key s:' + password, function (err, stdout) {
                             if (err) {
                                 console.log(err);
+                                reject(err);
                             } else {
-                                exec('dhclient wlan0', function () {
-                                    console.log(stdout);
-                                    wifi.client.status = 'connected';
-                                    resolve(stdout);
+                                console.log(stdout);
+                                exec('sudo dhclient wlan0', function (err, stdout) {
+                                    if (err) {
+                                        console.log(err);
+                                        reject(err);
+                                    } else {
+                                        console.log(stdout);
+                                        wifi.client.status = 'connected';
+                                        resolve(stdout);
+                                    }
                                 });
                                 console.log(stdout);
                             }

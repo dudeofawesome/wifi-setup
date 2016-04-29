@@ -9,6 +9,7 @@ String.prototype.replaceAll = function (find, replace) {
 
 var bodyParser = require('body-parser');
 
+var database;
 var wifiManager = require('./modules/wifi-manager')();
 var server = require('./modules/server')({
     onClientConfiguring: function () {
@@ -17,22 +18,23 @@ var server = require('./modules/server')({
     onSetupComplete: function (settings) {
         console.log('onSetupComplete');
         console.log(settings);
-        wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function (err) {
-            if (!err) {
-                server.stop();
-            }
-            console.log(err);
+        wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
+            database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
+            server.stop();
+        }).catch(function () {
+            console.log('Failed to connect using new creds');
         });
     }
 });
 
-module.exports = function (SERVICE_NAME, express, app, database) {
+module.exports = function (SERVICE_NAME, express, app, _database) {
     if (!express) {
         express = require('express');
     }
     if (!app) {
         app = express();
     }
+    database = _database;
     if (!database) {
         database = require('./modules/database');
         database.init().then(function () {
@@ -62,23 +64,21 @@ module.exports = function (SERVICE_NAME, express, app, database) {
         },
         start: function () {
             return new Promise(function (resolve) {
-                if (configured) {
-                    wifiManager.client.connect('TODO', 'get from DB!!!').then(function (err) {
-                        if (!err) {
-                            if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
-                                module.exports.callbacks.onConnectToWIFI('TODO', '10.0.0.1');
-                            }
+                database.getWifiCreds().then(function (creds) {
+                    wifiManager.client.connect(creds.SSID, creds.password).then(function () {
+                        if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
+                            module.exports.callbacks.onConnectToWIFI(creds.SSID, '10.0.0.1');
                         }
-                        console.log(err);
+                        resolve();
                     }).catch(function (err) {
                         console.log(err);
                         wifiSetup.startConfigServer();
+                        resolve();
                     });
-                } else {
+                }).catch(function () {
                     wifiSetup.startConfigServer();
-                }
-
-                resolve();
+                    resolve();
+                });
             });
         },
         stop: function () {
@@ -105,5 +105,3 @@ module.exports = function (SERVICE_NAME, express, app, database) {
 
     return wifiSetup;
 };
-
-var configured = false;

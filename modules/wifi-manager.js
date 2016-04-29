@@ -28,7 +28,7 @@ module.exports = function () {
                     } else {
                         wifi.configFiles.all.setAP(SSID, password);
 
-                        exec('/etc/init.d/hostapd restart', function (err, stdout) {
+                        exec('sudo /etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
                                 console.log(err);
                             } else {
@@ -48,7 +48,7 @@ module.exports = function () {
             down: function () {
                 return new Promise(function (resolve) {
                     console.log('Turning AP off');
-                    exec('/etc/init.d/hostapd stop', function () {
+                    exec('sudo /etc/init.d/hostapd stop', function () {
                         console.log('WiFi AP stopped');
                         wifi.configFiles.all.setClient();
                         wifi.accessPoint.status = 'down';

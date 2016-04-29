@@ -26,41 +26,7 @@ module.exports = function () {
                     if (wifi.client.status !== 'down') {
                         resolve();
                     } else {
-                        var defaultHostapdPath = '/etc/default/hostapd';
-                        var hostapdPath = '/etc/hostapd/hostapd.conf';
-                        var interfacesPath = '/etc/network/interfaces';
-
-                        try {
-                            if (fs.readFileSync(defaultHostapdPath).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(defaultHostapdPath);
-                            }
-                        } catch (e) {}
-
-                        var defaultHostapdConf = fs.readFileSync('./modules/hostapd.fill').toString();
-                        defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', hostapdPath);
-                        fs.writeFileSync(defaultHostapdPath, defaultHostapdConf);
-
-                        try {
-                            if (fs.readFileSync(hostapdPath).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(hostapdPath);
-                            }
-                        } catch (e) {}
-
-                        var hostapdConf = fs.readFileSync('./modules/hostapd.conf.fill').toString();
-                        hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
-                        hostapdConf = hostapdConf.replaceAll('{{password}}', password);
-                        fs.writeFileSync(hostapdPath, hostapdConf);
-
-                        try {
-                            if (fs.readFileSync(interfacesPath).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(interfacesPath);
-                            }
-                        } catch (e) {}
-
-                        var interfaces = fs.readFileSync('./modules/interfaces.fill').toString();
-                        interfaces = interfaces.replaceAll('{{IP}}', '192.168.42.1');
-                        interfaces = interfaces.replaceAll('{{hostapd}}', hostapdPath);
-                        fs.writeFileSync(interfacesPath, interfaces);
+                        wifi.configFiles.all.setAP(SSID, password);
 
                         exec('/etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
@@ -85,6 +51,7 @@ module.exports = function () {
                     if (wifi.accessPoint.status === 'up') {
                         exec('/etc/init.d/hostapd stop', function () {
                             console.log('WiFi AP stopped');
+                            wifi.configFiles.all.setClient();
                             wifi.accessPoint.status = 'down';
                             resolve();
                         });
@@ -128,6 +95,85 @@ module.exports = function () {
                     wifi.client.status = 'down';
                     resolve();
                 });
+            }
+        },
+        configFiles: {
+            defaultHostapd: {
+                path: '/etc/default/hostapd',
+                setAP: function () {
+                    try {
+                        if (fs.readFileSync(wifi.configFiles.defaultHostapd.path).toString().indexOf('# wifi-setup config') === -1) {
+                            utils.backupFile(wifi.configFiles.defaultHostapd.path);
+                        }
+                    } catch (e) {}
+
+                    var defaultHostapdConf = fs.readFileSync('./modules/hostapd.fill').toString();
+                    defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', wifi.configFiles.hostapdConf.path);
+                    fs.writeFileSync(wifi.configFiles.defaultHostapd.path, defaultHostapdConf);
+                },
+                setClient: function () {
+                    try {
+                        utils.backupFile(wifi.configFiles.defaultHostapd.path + '.back', function (path) {
+                            return path.split('.back')[0];
+                        });
+                    } catch (e) {}
+                }
+            },
+            hostapdConf: {
+                path: '/etc/hostapd/hostapd.conf',
+                setAP: function (SSID, password) {
+                    try {
+                        if (fs.readFileSync(wifi.configFiles.hostapdConf.path).toString().indexOf('# wifi-setup config') === -1) {
+                            utils.backupFile(wifi.configFiles.hostapdConf.path);
+                        }
+                    } catch (e) {}
+
+                    var hostapdConf = fs.readFileSync('./modules/hostapd.conf.fill').toString();
+                    hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
+                    hostapdConf = hostapdConf.replaceAll('{{password}}', password);
+                    fs.writeFileSync(wifi.configFiles.hostapdConf.path, hostapdConf);
+                },
+                setClient: function () {
+                    try {
+                        utils.backupFile(wifi.configFiles.hostapdConf.path + '.back', function (path) {
+                            return path.split('.back')[0];
+                        });
+                    } catch (e) {}
+                }
+            },
+            interfaces: {
+                path: '/etc/network/interfaces',
+                setAP: function () {
+                    try {
+                        if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
+                            utils.backupFile(wifi.configFiles.interfaces.path);
+                        }
+                    } catch (e) {}
+
+                    var interfaces = fs.readFileSync('./modules/interfaces.fill').toString();
+                    interfaces = interfaces.replaceAll('{{IP}}', '192.168.42.1');
+                    interfaces = interfaces.replaceAll('{{hostapd}}', wifi.configFiles.hostapdConf.path);
+                    fs.writeFileSync(wifi.configFiles.interfaces.path, interfaces);
+                },
+                setClient: function () {
+                    try {
+                        utils.backupFile(wifi.configFiles.interfaces.path + '.back', function (path) {
+                            return path.split('.back')[0];
+                        });
+                    } catch (e) {}
+                }
+            },
+            all: {
+                setAP: function (SSID, password) {
+                    wifi.configFiles.defaultHostapd.setAP();
+                    wifi.configFiles.hostapdConf.setAP(SSID, password);
+                    wifi.configFiles.interfaces.setAP();
+                },
+                setClient: function () {
+                    wifi.configFiles.defaultHostapd.setClient();
+                    wifi.configFiles.hostapdConf.setClient();
+                    wifi.configFiles.interfaces.setClient();
+                }
             }
         }
     };

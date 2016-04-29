@@ -48,16 +48,12 @@ module.exports = function () {
             down: function () {
                 return new Promise(function (resolve) {
                     console.log('Turning AP off');
-                    if (wifi.accessPoint.status === 'up') {
-                        exec('/etc/init.d/hostapd stop', function () {
-                            console.log('WiFi AP stopped');
-                            wifi.configFiles.all.setClient();
-                            wifi.accessPoint.status = 'down';
-                            resolve();
-                        });
-                    } else {
+                    exec('/etc/init.d/hostapd stop', function () {
+                        console.log('WiFi AP stopped');
+                        wifi.configFiles.all.setClient();
+                        wifi.accessPoint.status = 'down';
                         resolve();
-                    }
+                    });
                 });
             }
         },

@@ -134,6 +134,7 @@ module.exports = function () {
                     var hostapdConf = fs.readFileSync('./modules/hostapd.conf.fill').toString();
                     hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                     hostapdConf = hostapdConf.replaceAll('{{password}}', password);
+                    hostapdConf = hostapdConf.replaceAll('{{driver}}', 'rtl871xdrv');
                     fs.writeFileSync(wifi.configFiles.hostapdConf.path, hostapdConf);
                 },
                 setClient: function () {

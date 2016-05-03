@@ -22,11 +22,13 @@ var server = require('./modules/server')({
     onSetupComplete: function (settings) {
         console.log('onSetupComplete');
         console.log(settings);
-        wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
-            database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
-            server.stop();
-        }).catch(function () {
-            console.log('Failed to connect using new creds');
+        wifiManager.accessPoint.down().then(function () {
+            wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
+                database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
+                server.stop();
+            }).catch(function () {
+                console.log('Failed to connect using new creds');
+            });
         });
     }
 });

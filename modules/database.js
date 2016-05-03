@@ -1,6 +1,11 @@
 'use strict';
 
 var os = require('os');
+if (!os.homedir) {
+    os.homedir = function () {
+        return process.env.HOME;
+    }
+}
 var nedb = require('nedb');
 var db = [
     'credentials'

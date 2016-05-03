@@ -38,7 +38,7 @@ module.exports = function () {
                                 } else {
                                     console.log(err);
                                 }
-                                reject();
+                                reject(err);
                             } else {
                                 console.log(stdout);
                                 if (stdout.indexOf('Restarting hostapd') > -1) {
@@ -67,7 +67,7 @@ module.exports = function () {
                         } else {
                             console.log('WiFi AP stopped');
                             wifi.accessPoint.status = 'down';
-                            resolve();
+                            resolve(err);
                         }
                     });
                 });

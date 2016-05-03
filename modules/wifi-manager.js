@@ -34,6 +34,7 @@ module.exports = function () {
                         exec('/etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
                                 console.log(JSON.stringify(err));
+                                console.log(JSON.stringify(stdout));
                                 if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
                                     console.log(noSudoMessage);
                                 }

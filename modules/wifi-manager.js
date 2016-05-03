@@ -258,7 +258,7 @@ module.exports = function () {
                         ]).then(function (results) {
                             resolve(results);
                         }).catch(function (errs) {
-                            if (errs[0].code === 'EACCES') {
+                            if (errs.code === 'EACCES') {
                                 console.log(noSudoMessage);
                             }
                             reject(errs);

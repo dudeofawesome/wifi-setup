@@ -22,6 +22,9 @@ var server = require('./modules/server')({
         wifiManager.accessPoint.down().then(function () {
             wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
                 database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
+                if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
+                    module.exports.callbacks.onConnectToWIFI(settings.wifiSSID, '10.0.0.1');
+                }
                 server.stop();
             }).catch(function () {
                 console.log('Failed to connect using new creds');

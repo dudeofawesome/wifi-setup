@@ -33,7 +33,7 @@ module.exports = function () {
 
                         exec('/etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
-                                console.log(err);
+                                console.log(JSON.stringify(err));
                                 if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
                                     console.log(noSudoMessage);
                                 }
@@ -55,7 +55,7 @@ module.exports = function () {
                 return new Promise(function (resolve, reject) {
                     console.log('Turning AP off');
                     exec('/etc/init.d/hostapd stop', function (err) {
-                        if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
+                        if (err.Error === 'Command failed: Failed to stop hostapd.service: Access denied') {
                             console.log(noSudoMessage);
                             reject();
                         } else {

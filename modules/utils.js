@@ -1,4 +1,8 @@
 var fs = require('fs');
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 module.exports = {
 	// NOTE: this is not cryptographically secure. Only use this for very unimportant passwords

@@ -5,6 +5,10 @@ var nedb = require('nedb');
 var db = [
     'credentials'
 ];
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 module.exports = {
     init: function () {

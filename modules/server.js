@@ -1,4 +1,8 @@
 var fs = require('fs');
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 var SERVICE_NAME = 'DEFAULT';
 

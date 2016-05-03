@@ -1,6 +1,10 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
 var utils = require('./utils');
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 var noSudoMessage = 'The wifi-setup module requires root permissions in order to modify system config files.\n' +
     '    Please try running node as root';

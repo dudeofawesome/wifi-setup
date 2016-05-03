@@ -1,14 +1,23 @@
 'use strict';
 
 var os = require('os');
+if (!os.homedir) {
+    os.homedir = function () {
+        return process.env.HOME;
+    }
+}
 var nedb = require('nedb');
 var db = [
-    'services'
+    'credentials'
 ];
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 module.exports = {
     init: function () {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             var path;
             switch (process.platform) {
                 case 'darwin':
@@ -32,7 +41,7 @@ module.exports = {
     },
     start: function () {
         return new Promise(function (resolve, reject) {
-            db.services.loadDatabase(function (err) {
+            db.credentials.loadDatabase(function (err) {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -44,32 +53,34 @@ module.exports = {
         });
     },
     stop: function () {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             resolve();
         });
     },
 
-    getToken: function (serviceName) {
+    getWifiCreds: function () {
         return new Promise(function (resolve, reject) {
-            db.services.findOne({name: serviceName}, {token: 1}, function (err, service) {
-                if (err || !service) {
+            db.credentials.findOne({}, function (err, creds) {
+                if (err || !creds) {
                     console.log(err);
                     reject(err);
                 } else {
-                    resolve(service.token);
+                    resolve(creds);
                 }
             });
         });
     },
-    setToken: function (serviceName, token) {
+    setWifiCreds: function (SSID, password) {
         return new Promise(function (resolve, reject) {
-            db.services.update({name: serviceName}, {$set: {token: token}}, {upsert: true}, function (err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    db.services.persistence.compactDatafile();
-                    resolve();
-                }
+            db.credentials.remove({}, { multi: true }, function () {
+                db.credentials.insert({SSID: SSID, password: password}, function (err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        db.credentials.persistence.compactDatafile();
+                        resolve();
+                    }
+                });
             });
         });
     }

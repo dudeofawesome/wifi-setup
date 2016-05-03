@@ -1,0 +1,15 @@
+# wifi-setup config
+
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+
+auto eth0
+    iface eth0 inet dhcp
+
+auto wlan0
+# And the following 4 lines are for when using hostapd...
+iface wlan0 inet static
+   hostapd {{hostapd}}
+   address {{IP}}
+   netmask 255.255.255.0

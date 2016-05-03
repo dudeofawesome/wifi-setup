@@ -1,4 +1,8 @@
-require('es6-promise').polyfill();
+// require('es6-promise').polyfill();
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 String.prototype.replaceAll = function (find, replace) {
     return this.replace(new RegExp(find, 'g'), replace);
@@ -9,23 +13,34 @@ String.prototype.replaceAll = function (find, replace) {
 
 var bodyParser = require('body-parser');
 
+var database;
 var wifiManager = require('./modules/wifi-manager')();
 var server = require('./modules/server')({
     onClientConfiguring: function () {
-
+        console.log('onClientConfiguring');
     },
     onSetupComplete: function (settings) {
+        console.log('onSetupComplete');
         console.log(settings);
+        wifiManager.accessPoint.down().then(function () {
+            wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
+                database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
+                server.stop();
+            }).catch(function () {
+                console.log('Failed to connect using new creds');
+            });
+        });
     }
 });
 
-module.exports = function (SERVICE_NAME, express, app, database) {
+module.exports = function (SERVICE_NAME, express, app, _database) {
     if (!express) {
         express = require('express');
     }
     if (!app) {
         app = express();
     }
+    database = _database;
     if (!database) {
         database = require('./modules/database');
         database.init().then(function () {
@@ -55,28 +70,21 @@ module.exports = function (SERVICE_NAME, express, app, database) {
         },
         start: function () {
             return new Promise(function (resolve) {
-                if (configured) {
-                    wifiManager.client.connect('TODO', 'get from DB!!!').then(function (SSID, IP) {
+                database.getWifiCreds().then(function (creds) {
+                    wifiManager.client.connect(creds.SSID, creds.password).then(function () {
                         if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
-                            module.exports.callbacks.onConnectToWIFI(SSID, IP);
+                            module.exports.callbacks.onConnectToWIFI(creds.SSID, '10.0.0.1');
                         }
+                        resolve();
                     }).catch(function (err) {
                         console.log(err);
-                        Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
-                            if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
-                                module.exports.callbacks.onAPstart(SSID, password);
-                            }
-                        });
+                        wifiSetup.startConfigServer();
+                        resolve();
                     });
-                } else {
-                    Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8080)]).then(function (SSID, password) {
-                        if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
-                            module.exports.callbacks.onAPstart(SSID, password);
-                        }
-                    });
-                }
-
-                resolve();
+                }).catch(function () {
+                    wifiSetup.startConfigServer();
+                    resolve();
+                });
             });
         },
         stop: function () {
@@ -88,10 +96,18 @@ module.exports = function (SERVICE_NAME, express, app, database) {
                     console.log(errs);
                 });
             });
+        },
+
+        startConfigServer: function () {
+            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then(function (SSID, password) {
+                if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
+                    module.exports.callbacks.onAPstart(SSID, password);
+                }
+            }).catch(function (errs) {
+                console.log(errs);
+            });
         }
     };
 
     return wifiSetup;
 };
-
-var configured = false;

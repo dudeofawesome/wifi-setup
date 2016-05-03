@@ -1,16 +1,20 @@
 var fs = require('fs');
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 var SERVICE_NAME = 'DEFAULT';
 
 module.exports = function (callbacks) {
-    var app;
-    var appServer;
-
     var server = {
+        app: undefined,
+        appServer: undefined,
+
         init: function (express, app) {
             return new Promise(function (resolve) {
                 console.log('Initializing server');
-                module.exports.app = app;
+                server.app = app;
 
                 var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
                 configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
@@ -18,7 +22,7 @@ module.exports = function (callbacks) {
                 var finishConfigPage = fs.readFileSync('./modules/pages/finish_configure.html').toString();
                 finishConfigPage = finishConfigPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
 
-                app.use(express.static('./pages/static'));
+                app.use(express.static('./modules/pages/static'));
 
                 app.get('/', function (req, res) {
                     res.send(configPage);
@@ -29,13 +33,10 @@ module.exports = function (callbacks) {
 
                 app.post('/finishConfig/', function (req, res) {
                     console.log(req.body);
-                    serviceData = req.body;
-                    configured = true;
                     res.send(finishConfigPage);
                     if (callbacks && callbacks.onSetupComplete) {
                         callbacks.onSetupComplete(req.body);
                     }
-                    module.exports.start();
                 });
 
                 resolve();
@@ -44,8 +45,8 @@ module.exports = function (callbacks) {
         start: function (port) {
             return new Promise(function (resolve) {
                 console.log('Starting server');
-                appServer = app.listen(port, function () {
-                    console.log('Listening on ' + appServer.address().port);
+                server.appServer = server.app.listen(port, function () {
+                    console.log('Listening on ' + server.appServer.address().port);
                     resolve();
                 });
             });
@@ -53,8 +54,8 @@ module.exports = function (callbacks) {
         stop: function () {
             return new Promise(function (resolve) {
                 console.log('Stopping server');
-                if (appServer) {
-                    appServer.close();
+                if (server.appServer) {
+                    server.appServer.close();
                 }
 
                 resolve();

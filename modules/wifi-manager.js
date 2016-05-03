@@ -33,12 +33,12 @@ module.exports = function () {
 
                         exec('/etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
-                                console.log(JSON.stringify(err));
-                                console.log(JSON.stringify(err.message));
-                                console.log(JSON.stringify(stdout));
-                                if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
+                                if (err.message.indexOf('Access denied') > -1) {
                                     console.log(noSudoMessage);
+                                } else {
+                                    console.log(err);
                                 }
+                                reject();
                             } else {
                                 console.log(stdout);
                                 if (stdout.indexOf('Restarting hostapd') > -1) {
@@ -57,8 +57,12 @@ module.exports = function () {
                 return new Promise(function (resolve, reject) {
                     console.log('Turning AP off');
                     exec('/etc/init.d/hostapd stop', function (err) {
-                        if (err.Error === 'Command failed: Failed to stop hostapd.service: Access denied') {
-                            console.log(noSudoMessage);
+                        if (err) {
+                            if (err.message.indexOf('Access denied') > -1) {
+                                console.log(noSudoMessage);
+                            } else {
+                                console.log(err);
+                            }
                             reject();
                         } else {
                             console.log('WiFi AP stopped');

@@ -45,8 +45,10 @@ module.exports = function () {
                                 } else {
                                     console.log(stdout);
                                     if (stdout.indexOf('Restarting hostapd') > -1) {
-                                        wifi.accessPoint.status = 'up';
-                                        resolve({SSID: SSID, password: password});
+                                        exec('ifdown wlan0 && ifup wlan0', function () {
+                                            wifi.accessPoint.status = 'up';
+                                            resolve({SSID: SSID, password: password});
+                                        });
                                     } else {
                                         wifi.accessPoint.status = 'down';
                                         reject();
@@ -69,9 +71,11 @@ module.exports = function () {
                             }
                             reject();
                         } else {
-                            console.log('WiFi AP stopped');
-                            wifi.accessPoint.status = 'down';
-                            resolve();
+                            exec('ifdown wlan0', function () {
+                                console.log('WiFi AP stopped');
+                                wifi.accessPoint.status = 'down';
+                                resolve();
+                            });
                         }
                     });
                 });

@@ -2,6 +2,9 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var utils = require('./utils');
 
+var noSudoMessage = 'The wifi-setup module requires root permissions in order to modify system config files.\n' +
+    '  Please try running node as root';
+
 module.exports = function () {
     var wifi = {
         init: function () {
@@ -31,9 +34,12 @@ module.exports = function () {
                         exec('/etc/init.d/hostapd restart', function (err, stdout) {
                             if (err) {
                                 console.log(err);
+                                if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
+                                    console.log(noSudoMessage);
+                                }
                             } else {
                                 console.log(stdout);
-                                if (stdout.indexOf('Starting advanced IEEE 802.11 management: hostapd.') > -1) {
+                                if (stdout.indexOf('Restarting hostapd') > -1) {
                                     wifi.accessPoint.status = 'up';
                                     resolve({SSID: SSID, password: password});
                                 } else {
@@ -46,12 +52,17 @@ module.exports = function () {
                 });
             },
             down: function () {
-                return new Promise(function (resolve) {
+                return new Promise(function (resolve, reject) {
                     console.log('Turning AP off');
-                    exec('/etc/init.d/hostapd stop', function () {
-                        console.log('WiFi AP stopped');
-                        wifi.accessPoint.status = 'down';
-                        resolve();
+                    exec('/etc/init.d/hostapd stop', function (err) {
+                        if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
+                            console.log(noSudoMessage);
+                            reject();
+                        } else {
+                            console.log('WiFi AP stopped');
+                            wifi.accessPoint.status = 'down';
+                            resolve();
+                        }
                     });
                 });
             }
@@ -185,8 +196,7 @@ module.exports = function () {
                             resolve(results);
                         }).catch(function (errs) {
                             if (errs[0].code === 'EACCES') {
-                                console.log('The wifi-setup module requires root permissions in order to modify system config files.\n' +
-                                    '  Please try running node as root');
+                                console.log(noSudoMessage);
                             }
                             reject(errs);
                         });

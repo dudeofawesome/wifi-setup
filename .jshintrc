@@ -1,0 +1,47 @@
+{
+    "loopfunc": true,
+    "node": true,
+
+    "curly": true,
+    "latedef": true,
+    "quotmark": true,
+    "undef": true,
+    "unused": true,
+    "trailing": true,
+
+    "-W041": false,
+
+    "globals": {
+        "google": false,
+        "qrgen": false,
+        "XLSX": false,
+        "saveAs": false,
+        "Blob": false,
+        "Workbook": false,
+        "ngApp": true,
+        "document": false,
+        "window": false,
+        "navigator": false,
+        "angular": false,
+        "TweenLite": false,
+        "FileReader": false,
+        "DATE": false,
+        "Audio": false,
+        "ActiveXObject": false,
+        "XMLHttpRequest": false,
+        "describe": false,
+        "it": false,
+        "localStorage": false,
+        "alert": false,
+        "Power4": false,
+
+        "send_message": false,
+        "send_submit": false,
+        "send_media_dialogue": false,
+        "send_media_dialogue_preview_img": false,
+        "send_attachment_input": false,
+        "nav_drawer_icon": false,
+        "sidebar": false,
+        "model": false
+    }
+}

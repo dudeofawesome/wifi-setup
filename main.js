@@ -1,15 +1,12 @@
 // require('es6-promise').polyfill();
 var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function(error){
+Promise.onPossiblyUnhandledRejection(function (error) {
     throw error;
 });
 
 String.prototype.replaceAll = function (find, replace) {
     return this.replace(new RegExp(find, 'g'), replace);
 };
-
-
-
 
 var bodyParser = require('body-parser');
 
@@ -42,7 +39,7 @@ module.exports = function (SERVICE_NAME, express, app, _database) {
     }
     database = _database;
     if (!database) {
-        database = require('./modules/database');
+        database = require('./modules/database')(SERVICE_NAME);
         database.init().then(function () {
             database.start();
         });

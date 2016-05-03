@@ -1,49 +1,49 @@
 var fs = require('fs');
 var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function(error){
+Promise.onPossiblyUnhandledRejection(function (error) {
     throw error;
 });
 
 module.exports = {
-	// NOTE: this is not cryptographically secure. Only use this for very unimportant passwords
-	/* requirements = {lowercase: true, uppercase: true, numbers: true, symbols: true} */
-	/* specialLists = {lowercase: "??", uppercase: "??", numbers: "??", symbols: "??"} */
+    // NOTE: this is not cryptographically secure. Only use this for very unimportant passwords
+    /* requirements = {lowercase: true, uppercase: true, numbers: true, symbols: true} */
+    /* specialLists = {lowercase: "??", uppercase: "??", numbers: "??", symbols: "??"} */
     generatePassword: function (length, requirements, specialLists) {
         var lowercase = 'abcdefghijklmnopqrstuvwxyz';
         var uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var numbers = '0123456789';
         var symbols = '!@#$%^&*()-_+=,<.>/?|`~';
-        if (specialLists != undefined) {
-            if (specialLists.lowercase != undefined) {
+        if (specialLists) {
+            if (specialLists.lowercase) {
                 lowercase = specialLists.lowercase;
             }
-            if (specialLists.uppercase != undefined) {
+            if (specialLists.uppercase) {
                 uppercase = specialLists.uppercase;
             }
-            if (specialLists.numbers != undefined) {
+            if (specialLists.numbers) {
                 numbers = specialLists.numbers;
             }
-            if (specialLists.symbols != undefined) {
+            if (specialLists.symbols) {
                 symbols = specialLists.symbols;
             }
         }
 
-        if (requirements == undefined) {
+        if (!requirements) {
             requirements = {};
         }
-        if (requirements.lowercase == undefined) {
+        if (!requirements.lowercase) {
             requirements.lowercase = true;
         }
-        if (requirements.uppercase == undefined) {
+        if (!requirements.uppercase) {
             requirements.uppercase = true;
         }
-        if (requirements.numbers == undefined) {
+        if (!requirements.numbers) {
             requirements.numbers = true;
         }
-        if (requirements.symbols == undefined) {
+        if (!requirements.symbols) {
             requirements.symbols = true;
         }
-        if (length == undefined) {
+        if (!length) {
             length = 24;
         }
 

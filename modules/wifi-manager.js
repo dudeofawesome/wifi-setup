@@ -2,7 +2,7 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var utils = require('./utils');
 var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function(error){
+Promise.onPossiblyUnhandledRejection(function (error) {
     throw error;
 });
 

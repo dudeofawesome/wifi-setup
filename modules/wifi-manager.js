@@ -31,28 +31,25 @@ module.exports = function () {
                     } else {
                         wifi.configFiles.all.setAP(SSID, password);
 
-                        try {
-                            exec('/etc/init.d/hostapd restart', function (err, stdout) {
-                                if (err) {
-                                    console.log(JSON.stringify(err));
-                                    console.log(JSON.stringify(stdout));
-                                    if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
-                                        console.log(noSudoMessage);
-                                    }
-                                } else {
-                                    console.log(stdout);
-                                    if (stdout.indexOf('Restarting hostapd') > -1) {
-                                        wifi.accessPoint.status = 'up';
-                                        resolve({SSID: SSID, password: password});
-                                    } else {
-                                        wifi.accessPoint.status = 'down';
-                                        reject();
-                                    }
+                        exec('/etc/init.d/hostapd restart', function (err, stdout) {
+                            if (err) {
+                                console.log(JSON.stringify(err));
+                                console.log(JSON.stringify(err.message));
+                                console.log(JSON.stringify(stdout));
+                                if (err.Error === 'Command failed: Failed to restart hostapd.service: Access denied') {
+                                    console.log(noSudoMessage);
                                 }
-                            });
-                        } catch (e) {
-                            console.log(e);
-                        }
+                            } else {
+                                console.log(stdout);
+                                if (stdout.indexOf('Restarting hostapd') > -1) {
+                                    wifi.accessPoint.status = 'up';
+                                    resolve({SSID: SSID, password: password});
+                                } else {
+                                    wifi.accessPoint.status = 'down';
+                                    reject();
+                                }
+                            }
+                        });
                     }
                 });
             },

@@ -1,4 +1,8 @@
-require('es6-promise').polyfill();
+// require('es6-promise').polyfill();
+var Promise = require('bluebird');
+Promise.onPossiblyUnhandledRejection(function(error){
+    throw error;
+});
 
 String.prototype.replaceAll = function (find, replace) {
     return this.replace(new RegExp(find, 'g'), replace);

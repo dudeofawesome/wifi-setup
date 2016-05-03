@@ -72,7 +72,7 @@ module.exports = {
     },
     setWifiCreds: function (SSID, password) {
         return new Promise(function (resolve, reject) {
-            db.remove({}, { multi: true }, function () {
+            db.credentials.remove({}, { multi: true }, function () {
                 db.credentials.insert({SSID: SSID, password: password}, function (err) {
                     if (err) {
                         reject(err);

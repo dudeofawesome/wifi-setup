@@ -50,7 +50,6 @@ module.exports = function () {
                     console.log('Turning AP off');
                     exec('sudo /etc/init.d/hostapd stop', function () {
                         console.log('WiFi AP stopped');
-                        wifi.configFiles.all.setClient();
                         wifi.accessPoint.status = 'down';
                         resolve();
                     });
@@ -65,23 +64,16 @@ module.exports = function () {
                     if (wifi.accessPoint.status !== 'down') {
                         reject();
                     } else {
-                        exec('ifconfig wlan0 up && iwconfig wlan0 essid ' + SSID + ' key s:' + password, function (err, stdout) {
+                        wifi.configFiles.all.setClient(SSID, password);
+
+                        exec('sudo ifup wlan0', function (err, stdout) {
                             if (err) {
                                 console.log(err);
                                 reject(err);
                             } else {
                                 console.log(stdout);
-                                exec('sudo dhclient wlan0', function (err, stdout) {
-                                    if (err) {
-                                        console.log(err);
-                                        reject(err);
-                                    } else {
-                                        console.log(stdout);
-                                        wifi.client.status = 'connected';
-                                        resolve(stdout);
-                                    }
-                                });
-                                console.log(stdout);
+                                wifi.client.status = 'connected';
+                                resolve(stdout);
                             }
                         });
                     }
@@ -154,16 +146,23 @@ module.exports = function () {
                         }
                     } catch (e) {}
 
-                    var interfaces = fs.readFileSync('./modules/interfaces.fill').toString();
+                    var interfaces = fs.readFileSync('./modules/interfaces.ap.fill').toString();
                     interfaces = interfaces.replaceAll('{{IP}}', '192.168.42.1');
                     interfaces = interfaces.replaceAll('{{hostapd}}', wifi.configFiles.hostapdConf.path);
                     fs.writeFileSync(wifi.configFiles.interfaces.path, interfaces);
                 },
-                setClient: function () {
+                setClient: function (SSID, password) {
                     try {
-                        utils.backupFile(wifi.configFiles.interfaces.path + '.back', function (path) {
-                            return path.split('.back')[0];
-                        });
+                        try {
+                            if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
+                                utils.backupFile(wifi.configFiles.interfaces.path);
+                            }
+                        } catch (e) {}
+
+                        var interfaces = fs.readFileSync('./modules/interfaces.client.fill').toString();
+                        interfaces = interfaces.replaceAll('{{SSID}}', SSID);
+                        interfaces = interfaces.replaceAll('{{password}}', password);
+                        fs.writeFileSync(wifi.configFiles.interfaces.path, interfaces);
                     } catch (e) {}
                 }
             },
@@ -173,10 +172,10 @@ module.exports = function () {
                     wifi.configFiles.hostapdConf.setAP(SSID, password);
                     wifi.configFiles.interfaces.setAP();
                 },
-                setClient: function () {
+                setClient: function (SSID, password) {
                     wifi.configFiles.defaultHostapd.setClient();
                     wifi.configFiles.hostapdConf.setClient();
-                    wifi.configFiles.interfaces.setClient();
+                    wifi.configFiles.interfaces.setClient(SSID, password);
                 }
             }
         }

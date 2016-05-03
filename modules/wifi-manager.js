@@ -96,15 +96,23 @@ module.exports = function () {
             defaultHostapd: {
                 path: '/etc/default/hostapd',
                 setAP: function () {
-                    try {
-                        if (fs.readFileSync(wifi.configFiles.defaultHostapd.path).toString().indexOf('# wifi-setup config') === -1) {
-                            utils.backupFile(wifi.configFiles.defaultHostapd.path);
-                        }
-                    } catch (e) {}
+                    return new Promise(function (resolve, reject) {
+                        try {
+                            if (fs.readFileSync(wifi.configFiles.defaultHostapd.path).toString().indexOf('# wifi-setup config') === -1) {
+                                utils.backupFile(wifi.configFiles.defaultHostapd.path);
+                            }
+                        } catch (e) {}
 
-                    var defaultHostapdConf = fs.readFileSync('./modules/hostapd.fill').toString();
-                    defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', wifi.configFiles.hostapdConf.path);
-                    fs.writeFileSync(wifi.configFiles.defaultHostapd.path, defaultHostapdConf);
+                        var defaultHostapdConf = fs.readFileSync('./modules/hostapd.fill').toString();
+                        defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', wifi.configFiles.hostapdConf.path);
+                        fs.writeFile(wifi.configFiles.defaultHostapd.path, defaultHostapdConf, function (err) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve();
+                            }
+                        });
+                    });
                 },
                 setClient: function () {
                     try {
@@ -168,9 +176,21 @@ module.exports = function () {
             },
             all: {
                 setAP: function (SSID, password) {
-                    wifi.configFiles.defaultHostapd.setAP();
-                    wifi.configFiles.hostapdConf.setAP(SSID, password);
-                    wifi.configFiles.interfaces.setAP();
+                    return new Promise(function (resolve, reject) {
+                        Promise.all([
+                            wifi.configFiles.defaultHostapd.setAP(),
+                            wifi.configFiles.hostapdConf.setAP(SSID, password),
+                            wifi.configFiles.interfaces.setAP()
+                        ]).then(function (results) {
+                            resolve(results);
+                        }).catch(function (errs) {
+                            if (errs[0].code === 'EACCES') {
+                                console.log('The wifi-setup module requires root permissions in order to modify system config files.\n' +
+                                    '  Please try running node as root');
+                            }
+                            reject(errs);
+                        });
+                    });
                 },
                 setClient: function (SSID, password) {
                     wifi.configFiles.defaultHostapd.setClient();

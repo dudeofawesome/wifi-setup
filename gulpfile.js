@@ -8,7 +8,7 @@ gulp.task('babel', () => {
     if (!babel) {
         babel = require('gulp-babel');
     }
-    return gulp.src('src/**/*.js')
+    return gulp.src('src/**/*.babel.js')
             .pipe(babel({presets: ['es2015']}))
             .pipe(gulp.dest('build'));
 });
@@ -63,8 +63,16 @@ gulp.task('clean', () => {
 
 gulp.task('copy', ['copy-html', 'copy-css', 'copy-fonts', 'copy-fill', 'copy-bower']);
 
+gulp.task('watch', () => {
+    gulp.watch(['src/**/*.babel.js'], ['babel']);
+    gulp.watch(['src/**/*.scss', 'src/**/*.css'], ['sass']);
+    gulp.watch(['src/**/**'], ['copy']);
+});
+
 gulp.task('build', (callback) => {
     runSequence('clean', ['babel', 'sass', 'copy'], callback);
 });
+
+gulp.task('dev', ['build', 'watch']);
 
 gulp.task('default', ['build']);

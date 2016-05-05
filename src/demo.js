@@ -9,8 +9,8 @@ var WIFIsetup = require('./main')('DEFAULT');
 
 WIFIsetup.init({
     onAPstart: function (SSID, password) {
-        lcd.setText('SSID:' + SSID);
-        lcd.setText('Pass:' + password, {x:0, y:1}, false);
+        lcd.setText(`SSID: ${SSID}`);
+        lcd.setText(`Pass: ${password}`, {x:0, y:1}, false);
     },
     onClientConnected: function () {
         lcd.setColor(255, 100, 100);
@@ -30,8 +30,8 @@ WIFIsetup.init({
     },
     onConnectToWIFI: function (SSID, internalIP) {
         lcd.setColor(0, 255, 0);
-        lcd.setText('Cnctd:' + SSID);
-        lcd.setText('IP:' + internalIP, {x:0, y:1}, false);
+        lcd.setText(`Cnctd: ${SSID}`);
+        lcd.setText(`IP: ${internalIP}`, {x:0, y:1}, false);
     }
 }).then(function () {
     WIFIsetup.start().catch(function (err) {

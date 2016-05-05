@@ -1,0 +1,4 @@
+{
+    "directory" : "./src/modules/pages/static/resources/bower_components",
+    "json" : "./bower.json"
+}

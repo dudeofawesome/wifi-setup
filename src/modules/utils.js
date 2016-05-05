@@ -1,14 +1,10 @@
 var fs = require('fs');
-var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function (error) {
-    throw error;
-});
 
 module.exports = {
     // NOTE: this is not cryptographically secure. Only use this for very unimportant passwords
     /* requirements = {lowercase: true, uppercase: true, numbers: true, symbols: true} */
     /* specialLists = {lowercase: "??", uppercase: "??", numbers: "??", symbols: "??"} */
-    generatePassword: function (length, requirements, specialLists) {
+    generatePassword: (length, requirements, specialLists) => {
         var lowercase = 'abcdefghijklmnopqrstuvwxyz';
         var uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var numbers = '0123456789';
@@ -55,9 +51,9 @@ module.exports = {
 
         return password;
     },
-    backupFile: function (path, modifier) {
+    backupFile: (path, modifier) => {
         if (!modifier) {
-            modifier = function (path) {
+            modifier = (path) => {
                 return path += '.back';
             };
         }

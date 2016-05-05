@@ -1,10 +1,6 @@
-// require('es6-promise').polyfill();
-var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function (error) {
-    throw error;
-});
+require('babel-polyfill');
 
-String.prototype.replaceAll = function (find, replace) {
+String.prototype.replaceAll = (find, replace) => {
     return this.replace(new RegExp(find, 'g'), replace);
 };
 
@@ -13,27 +9,27 @@ var bodyParser = require('body-parser');
 var database;
 var wifiManager = require('./modules/wifi-manager')();
 var server = require('./modules/server')({
-    onClientConfiguring: function () {
+    onClientConfiguring: () => {
         console.log('onClientConfiguring');
     },
-    onSetupComplete: function (settings) {
+    onSetupComplete: (settings) => {
         console.log('onSetupComplete');
         console.log(settings);
-        wifiManager.accessPoint.down().then(function () {
-            wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(function () {
+        wifiManager.accessPoint.down().then(() => {
+            wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(() => {
                 database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
                 if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
                     module.exports.callbacks.onConnectToWIFI(settings.wifiSSID, '10.0.0.1');
                 }
                 server.stop();
-            }).catch(function () {
+            }).catch(() => {
                 console.log('Failed to connect using new creds');
             });
         });
     }
 });
 
-module.exports = function (SERVICE_NAME, express, app, _database) {
+module.exports = (SERVICE_NAME, express, app, _database) => {
     if (!express) {
         express = require('express');
     }
@@ -43,14 +39,14 @@ module.exports = function (SERVICE_NAME, express, app, _database) {
     database = _database;
     if (!database) {
         database = require('./modules/database')(SERVICE_NAME);
-        database.init().then(function () {
+        database.init().then(() => {
             database.start();
         });
     }
 
     var wifiSetup = {
-        init: function (callbacks) {
-            return new Promise(function (resolve) {
+        init: (callbacks) => {
+            return new Promise((resolve) => {
                 if (module.exports.callbacks) {
                     module.exports.callbacks = callbacks;
                 }
@@ -60,50 +56,50 @@ module.exports = function (SERVICE_NAME, express, app, _database) {
                     extended: true
                 }));
 
-                Promise.all([wifiManager.init(), server.init(express, app)]).then(function () {
+                Promise.all([wifiManager.init(), server.init(express, app)]).then(() => {
                     resolve();
-                }).catch(function (errs) {
+                }).catch((errs) => {
                     console.log('Something failed to initialize');
                     console.log(errs);
                 });
             });
         },
-        start: function () {
-            return new Promise(function (resolve) {
-                database.getWifiCreds().then(function (creds) {
-                    wifiManager.client.connect(creds.SSID, creds.password).then(function () {
+        start: () => {
+            return new Promise((resolve) => {
+                database.getWifiCreds().then((creds) => {
+                    wifiManager.client.connect(creds.SSID, creds.password).then(() => {
                         if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
                             module.exports.callbacks.onConnectToWIFI(creds.SSID, '10.0.0.1');
                         }
                         resolve();
-                    }).catch(function (err) {
+                    }).catch((err) => {
                         console.log(err);
                         wifiSetup.startConfigServer();
                         resolve();
                     });
-                }).catch(function () {
+                }).catch(() => {
                     wifiSetup.startConfigServer();
                     resolve();
                 });
             });
         },
-        stop: function () {
-            return new Promise(function (resolve) {
-                Promise.all([wifiManager.stop()]).then(function () {
+        stop: () => {
+            return new Promise((resolve) => {
+                Promise.all([wifiManager.stop()]).then(() => {
                     resolve();
-                }).catch(function (errs) {
+                }).catch((errs) => {
                     console.log('Something failed to stop');
                     console.log(errs);
                 });
             });
         },
 
-        startConfigServer: function () {
-            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then(function (SSID, password) {
+        startConfigServer: () => {
+            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then((SSID, password) => {
                 if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
                     module.exports.callbacks.onAPstart(SSID, password);
                 }
-            }).catch(function (errs) {
+            }).catch((errs) => {
                 console.log(errs);
             });
         }

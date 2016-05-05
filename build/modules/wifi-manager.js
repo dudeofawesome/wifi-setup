@@ -1,22 +1,19 @@
+'use strict';
+
 var exec = require('child_process').exec;
 var fs = require('fs');
 var utils = require('./utils');
-var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function (error) {
-    throw error;
-});
 
-var noSudoMessage = 'The wifi-setup module requires root permissions in order to modify system config files.\n' +
-    '    Please try running node as root';
+var noSudoMessage = 'The wifi-setup module requires root permissions in order to modify system config files.\n\n    Please try running node as root';
 
 module.exports = function () {
     var wifi = {
-        init: function () {
+        init: function init() {
             return new Promise(function (resolve) {
                 resolve();
             });
         },
-        stop: function () {
+        stop: function stop() {
             return new Promise(function (resolve) {
                 wifi.accessPoint.down();
                 resolve();
@@ -25,7 +22,7 @@ module.exports = function () {
 
         accessPoint: {
             status: 'down',
-            up: function (SSID, password) {
+            up: function up(SSID, password) {
                 return new Promise(function (resolve, reject) {
                     console.log('Turning AP on');
                     console.log('SSID: ' + SSID);
@@ -47,7 +44,7 @@ module.exports = function () {
                                     if (stdout.indexOf('Restarting hostapd') > -1) {
                                         exec('ifdown wlan0 && ifup wlan0', function () {
                                             wifi.accessPoint.status = 'up';
-                                            resolve({SSID: SSID, password: password});
+                                            resolve({ SSID: SSID, password: password });
                                         });
                                     } else {
                                         wifi.accessPoint.status = 'down';
@@ -59,7 +56,7 @@ module.exports = function () {
                     }
                 });
             },
-            down: function () {
+            down: function down() {
                 return new Promise(function (resolve, reject) {
                     console.log('Turning AP off');
                     exec('/etc/init.d/hostapd stop', function (err) {
@@ -83,7 +80,7 @@ module.exports = function () {
         },
         client: {
             status: 'down',
-            connect: function (SSID, password) {
+            connect: function connect(SSID, password) {
                 return new Promise(function (resolve, reject) {
                     console.log('Connecting to ' + SSID);
                     if (wifi.accessPoint.status !== 'down') {
@@ -104,7 +101,7 @@ module.exports = function () {
                     }
                 });
             },
-            disconnect: function () {
+            disconnect: function disconnect() {
                 return new Promise(function (resolve) {
                     console.log('Disconnecting WiFi');
                     exec('ifdown wlan0', function (err) {
@@ -120,7 +117,7 @@ module.exports = function () {
         configFiles: {
             defaultHostapd: {
                 path: '/etc/default/hostapd',
-                setAP: function () {
+                setAP: function setAP() {
                     return new Promise(function (resolve, reject) {
                         try {
                             if (fs.readFileSync(wifi.configFiles.defaultHostapd.path).toString().indexOf('# wifi-setup config') === -1) {
@@ -141,7 +138,7 @@ module.exports = function () {
                         });
                     });
                 },
-                setClient: function () {
+                setClient: function setClient() {
                     return new Promise(function (resolve) {
                         utils.backupFile(wifi.configFiles.defaultHostapd.path + '.back', function (path) {
                             return path.split('.back')[0];
@@ -152,7 +149,7 @@ module.exports = function () {
             },
             hostapdConf: {
                 path: '/etc/hostapd/hostapd.conf',
-                setAP: function (SSID, password) {
+                setAP: function setAP(SSID, password) {
                     return new Promise(function (resolve, reject) {
                         try {
                             if (fs.readFileSync(wifi.configFiles.hostapdConf.path).toString().indexOf('# wifi-setup config') === -1) {
@@ -175,7 +172,7 @@ module.exports = function () {
                         });
                     });
                 },
-                setClient: function () {
+                setClient: function setClient() {
                     return new Promise(function (resolve) {
                         utils.backupFile(wifi.configFiles.hostapdConf.path + '.back', function (path) {
                             return path.split('.back')[0];
@@ -186,7 +183,7 @@ module.exports = function () {
             },
             interfaces: {
                 path: '/etc/network/interfaces',
-                setAP: function () {
+                setAP: function setAP() {
                     return new Promise(function (resolve, reject) {
                         try {
                             if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
@@ -208,7 +205,7 @@ module.exports = function () {
                         });
                     });
                 },
-                setClient: function (SSID, password) {
+                setClient: function setClient(SSID, password) {
                     return new Promise(function (resolve, reject) {
                         try {
                             if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
@@ -232,13 +229,9 @@ module.exports = function () {
                 }
             },
             all: {
-                setAP: function (SSID, password) {
+                setAP: function setAP(SSID, password) {
                     return new Promise(function (resolve, reject) {
-                        Promise.all([
-                            wifi.configFiles.defaultHostapd.setAP(),
-                            wifi.configFiles.hostapdConf.setAP(SSID, password),
-                            wifi.configFiles.interfaces.setAP()
-                        ]).then(function (results) {
+                        Promise.all([wifi.configFiles.defaultHostapd.setAP(), wifi.configFiles.hostapdConf.setAP(SSID, password), wifi.configFiles.interfaces.setAP()]).then(function (results) {
                             resolve(results);
                         }).catch(function (errs) {
                             console.log(JSON.stringify(errs));
@@ -249,13 +242,9 @@ module.exports = function () {
                         });
                     });
                 },
-                setClient: function (SSID, password) {
+                setClient: function setClient(SSID, password) {
                     return new Promise(function (resolve, reject) {
-                        Promise.all([
-                            wifi.configFiles.defaultHostapd.setClient(),
-                            wifi.configFiles.hostapdConf.setClient(),
-                            wifi.configFiles.interfaces.setClient(SSID, password)
-                        ]).then(function (results) {
+                        Promise.all([wifi.configFiles.defaultHostapd.setClient(), wifi.configFiles.hostapdConf.setClient(), wifi.configFiles.interfaces.setClient(SSID, password)]).then(function (results) {
                             resolve(results);
                         }).catch(function (errs) {
                             if (errs.code === 'EACCES') {

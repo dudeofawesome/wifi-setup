@@ -1,18 +1,14 @@
 var fs = require('fs');
-var Promise = require('bluebird');
-Promise.onPossiblyUnhandledRejection(function(error){
-    throw error;
-});
 
 var SERVICE_NAME = 'DEFAULT';
 
-module.exports = function (callbacks) {
+module.exports = (callbacks) => {
     var server = {
         app: undefined,
         appServer: undefined,
 
-        init: function (express, app) {
-            return new Promise(function (resolve) {
+        init: (express, app) => {
+            return new Promise((resolve) => {
                 console.log('Initializing server');
                 server.app = app;
 
@@ -24,14 +20,14 @@ module.exports = function (callbacks) {
 
                 app.use(express.static('./modules/pages/static'));
 
-                app.get('/', function (req, res) {
+                app.get('/', (req, res) => {
                     res.send(configPage);
                     if (callbacks && callbacks.onClientConfiguring) {
                         callbacks.onClientConfiguring();
                     }
                 });
 
-                app.post('/finishConfig/', function (req, res) {
+                app.post('/finishConfig/', (req, res) => {
                     console.log(req.body);
                     res.send(finishConfigPage);
                     if (callbacks && callbacks.onSetupComplete) {
@@ -42,17 +38,17 @@ module.exports = function (callbacks) {
                 resolve();
             });
         },
-        start: function (port) {
-            return new Promise(function (resolve) {
+        start: (port) => {
+            return new Promise((resolve) => {
                 console.log('Starting server');
-                server.appServer = server.app.listen(port, function () {
-                    console.log('Listening on ' + server.appServer.address().port);
+                server.appServer = server.app.listen(port, () => {
+                    console.log(`Listening on ${server.appServer.address().port}`);
                     resolve();
                 });
             });
         },
-        stop: function () {
-            return new Promise(function (resolve) {
+        stop: () => {
+            return new Promise((resolve) => {
                 console.log('Stopping server');
                 if (server.appServer) {
                     server.appServer.close();

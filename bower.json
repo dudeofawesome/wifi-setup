@@ -23,5 +23,8 @@
   ],
   "devDependencies": {
     "mdi": "^1.5.54"
+  },
+  "dependencies": {
+    "gsap": "greensock-js#^1.10.2"
   }
 }

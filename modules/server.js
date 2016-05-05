@@ -31,6 +31,13 @@ module.exports = function (callbacks) {
                     }
                 });
 
+                app.get('/api', function (req, res) {
+                    res.send(configPage);
+                    if (callbacks && callbacks.onClientConfiguring) {
+                        callbacks.onClientConfiguring();
+                    }
+                });
+
                 app.post('/finishConfig/', function (req, res) {
                     console.log(req.body);
                     res.send(finishConfigPage);

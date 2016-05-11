@@ -156,11 +156,23 @@ module.exports = () => {
                             }
                         } catch (e) {}
 
-                        fs.readFile('./modules/hostapd.conf.fill', (err, file) => {
+                        let getHostapdFile = new Promise((resolve, reject) => {
+                            Pfs.readFile('./modules/hostapd.conf.fill', (err, file) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve(file);
+                                }
+                            });
+                        });
+                        Promise.all([getHostapdFile, wifi.getDriver()]).then((results) => {
+                            let file = results[0];
+                            let driver = results[1] || 'rtl871xdrv';
+
                             var hostapdConf = file.toString();
                             hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
                             hostapdConf = hostapdConf.replaceAll('{{password}}', password);
-                            hostapdConf = hostapdConf.replaceAll('{{driver}}', 'rtl871xdrv');
+                            hostapdConf = hostapdConf.replaceAll('{{driver}}', driver);
                             fs.writeFile(wifi.configFiles.hostapdConf.path, hostapdConf, (err) => {
                                 if (err) {
                                     reject(err);
@@ -180,6 +192,17 @@ module.exports = () => {
                     });
                 }
             },
+            getDriver: () => {
+                return new Promise((resolve, reject) => {
+                    exec('basename $( readlink /sys/class/net/wlan0/device/driver )', (err, stdout) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(stdout);
+                        }
+                    });
+                })
+            }
             interfaces: {
                 path: '/etc/network/interfaces',
                 setAP: () => {

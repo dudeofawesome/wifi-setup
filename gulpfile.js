@@ -1,10 +1,10 @@
 'use strict';
 
-const gulp = require('gulp');
-const runSequence = require('run-sequence');
+var gulp = require('gulp');
+var runSequence = require('run-sequence');
 
-let babel;
-gulp.task('babel', () => {
+var babel;
+gulp.task('babel', function () {
     if (!babel) {
         babel = require('gulp-babel');
     }
@@ -13,8 +13,8 @@ gulp.task('babel', () => {
             .pipe(gulp.dest('build'));
 });
 
-let sass;
-gulp.task('sass', () => {
+var sass;
+gulp.task('sass', function () {
     if (!sass) {
         sass = require('gulp-sass');
     }
@@ -23,38 +23,38 @@ gulp.task('sass', () => {
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-html', () => {
+gulp.task('copy-html', function () {
     return gulp.src('src/**/*.html')
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-css', () => {
+gulp.task('copy-css', function () {
     return gulp.src('src/**/*.css')
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-fonts', () => {
+gulp.task('copy-fonts', function () {
     return gulp.src(['src/**/*.eot', 'src/**/*.svg', 'src/**/*.ttf', 'src/**/*.woff', 'src/**/*.woff2'])
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-fill', () => {
+gulp.task('copy-fill', function () {
     return gulp.src('src/**/*.fill')
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-json', () => {
+gulp.task('copy-json', function () {
     return gulp.src('src/**/*.json')
             .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy-bower', () => {
+gulp.task('copy-bower', function () {
     return gulp.src('src/modules/pages/static/resources/bower_components/**/**')
             .pipe(gulp.dest('build/modules/pages/static/resources/bower_components'));
 });
 
-let del;
-gulp.task('clean', () => {
+var del;
+gulp.task('clean', function () {
     if (!del) {
         del = require('del');
     }
@@ -63,13 +63,13 @@ gulp.task('clean', () => {
 
 gulp.task('copy', ['copy-html', 'copy-css', 'copy-fonts', 'copy-fill', 'copy-bower']);
 
-gulp.task('watch', () => {
+gulp.task('watch', function () {
     gulp.watch(['src/**/*.babel.js'], ['babel']);
     gulp.watch(['src/**/*.scss', 'src/**/*.css'], ['sass']);
     gulp.watch(['src/**/**'], ['copy']);
 });
 
-gulp.task('build', (callback) => {
+gulp.task('build', function (callback) {
     runSequence('clean', ['babel', 'sass', 'copy'], callback);
 });
 

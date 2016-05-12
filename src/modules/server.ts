@@ -3,6 +3,11 @@ import {Utils} from './utils';
 
 var SERVICE_NAME = 'DEFAULT';
 
+import * as Promise from 'bluebird';
+Promise.onPossiblyUnhandledRejection((error) => {
+    throw error;
+});
+
 module.exports = (callbacks) => {
     var server = {
         app: undefined,

@@ -2,6 +2,11 @@ require('babel-polyfill');
 
 var bodyParser = require('body-parser');
 
+import * as Promise from 'bluebird';
+Promise.onPossiblyUnhandledRejection((error) => {
+    throw error;
+});
+
 var database;
 var wifiManager = require('./modules/wifi-manager')();
 var server = require('./modules/server')({

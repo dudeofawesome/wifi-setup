@@ -4,7 +4,7 @@
   "description": "WiFi AP setup, particularly useful for IoT devices",
   "main": "build/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp build:tests; gulp test",
     "postinstall": "bower install; typings install; gulp",
     "build": "gulp",
     "demo": "cd build; node demo"
@@ -37,6 +37,7 @@
   "devDependencies": {
     "bluebird": "^3.3.5",
     "bower": "^1.7.9",
+    "chai": "^3.5.0",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
@@ -45,7 +46,6 @@
     "gulp-typescript": "^2.13.4",
     "mocha": "^2.4.5",
     "run-sequence": "^1.1.5",
-    "should": "^8.3.1",
     "tslint": "^3.10.1",
     "typescript": "^1.8.10",
     "typings": "^0.8.1"

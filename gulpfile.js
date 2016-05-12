@@ -100,20 +100,8 @@ gulp.task('test', function (callback) {
     if (!mocha) {
         mocha = require('gulp-mocha');
     }
-    return gulp.src(['build/test/*.test.js', 'build/modules/test/*.test.js'], {read: false})
-            .pipe(mocha({reporter: 'nyan'}))
-            .once('error', function () {
-                if (!calledBack) {
-                    calledBack = true;
-                    callback();
-                }
-            })
-            .once('end', function () {
-                if (!calledBack) {
-                    calledBack = true;
-                    callback();
-                }
-            });
+    return gulp.src(['build/**/tests/*.test.js', 'build/modules/test/*.test.js'], {read: false})
+            .pipe(mocha({reporter: 'list'}));
 });
 
 var del;

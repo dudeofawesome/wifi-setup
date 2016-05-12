@@ -9,7 +9,7 @@
     },
     "filesGlob": [
         "src/**/*.ts",
-        "!src/**/tests/*.test.ts",
+        "src/**/tests/*.test.ts",
         "!node_modules/**/*",
         "typings/main/**/*.d.ts"
     ],

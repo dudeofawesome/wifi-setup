@@ -4,15 +4,22 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 
 var typescript;
-var tsProject;
 var sourcemaps;
+var tsProject;
 gulp.task('build:typescript', function () {
     if (!typescript) {
         typescript = require('gulp-typescript');
-        tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});
         sourcemaps = require('gulp-sourcemaps');
     }
-    var tsResult = tsProject.src()
+    if (!tsProject) {
+        tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});
+    }
+    var tsResult = gulp.src([
+            'src/**/*.ts',
+            '!src/**/tests/*.test.ts',
+            '!node_modules/**/*',
+            'typings/main/**/*.d.ts'
+        ])
         .pipe(sourcemaps.init())
         .pipe(typescript(tsProject));
 
@@ -20,6 +27,32 @@ gulp.task('build:typescript', function () {
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('build'));
 });
+
+var tsProjectTests;
+gulp.task('build:typescript:tests', function () {
+    if (!typescript) {
+        typescript = require('gulp-typescript');
+        sourcemaps = require('gulp-sourcemaps');
+    }
+    if (!tsProjectTests) {
+        tsProjectTests = typescript.createProject('tsconfig-tests.json', {sortOutput: true});
+    }
+    var tsResult = gulp.src([
+            'src/**/tests/*.test.ts',
+            '!node_modules/**/*',
+            'typings/main/**/*.d.ts'
+        ])
+        .pipe(sourcemaps.init())
+        .pipe(typescript(tsProjectTests));
+
+    return tsResult.js
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('build'));
+});
+
+gulp.task('build:tests', ['build:typescript:tests']);
+
+gulp.task('build:dev', ['build:typescript', 'build:tests']);
 
 var sass;
 gulp.task('sass', function () {
@@ -59,6 +92,28 @@ gulp.task('copy:json', function () {
 gulp.task('copy:bower', function () {
     return gulp.src('src/modules/pages/static/resources/bower_components/**/**')
             .pipe(gulp.dest('build/modules/pages/static/resources/bower_components'));
+});
+
+var mocha;
+gulp.task('test', function (callback) {
+    var calledBack = false;
+    if (!mocha) {
+        mocha = require('gulp-mocha');
+    }
+    return gulp.src(['build/test/*.test.js', 'build/modules/test/*.test.js'], {read: false})
+            .pipe(mocha({reporter: 'nyan'}))
+            .once('error', function () {
+                if (!calledBack) {
+                    calledBack = true;
+                    callback();
+                }
+            })
+            .once('end', function () {
+                if (!calledBack) {
+                    calledBack = true;
+                    callback();
+                }
+            });
 });
 
 var del;

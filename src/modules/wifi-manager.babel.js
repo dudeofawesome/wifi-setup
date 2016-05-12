@@ -157,7 +157,7 @@ module.exports = () => {
                         } catch (e) {}
 
                         let getHostapdFile = new Promise((resolve, reject) => {
-                            Pfs.readFile('./modules/hostapd.conf.fill', (err, file) => {
+                            fs.readFile('./modules/hostapd.conf.fill', (err, file) => {
                                 if (err) {
                                     reject(err);
                                 } else {
@@ -201,8 +201,8 @@ module.exports = () => {
                             resolve(stdout);
                         }
                     });
-                })
-            }
+                });
+            },
             interfaces: {
                 path: '/etc/network/interfaces',
                 setAP: () => {

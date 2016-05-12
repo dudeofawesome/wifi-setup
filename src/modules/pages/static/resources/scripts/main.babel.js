@@ -17,7 +17,7 @@ var submitForm = (name) => {
                 }
             }
         };
-        xmlhttp.open('POST', '/finishConfig', true);
+        xmlhttp.open('POST', '/save-settings', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         var name = document.getElementById('name');

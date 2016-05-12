@@ -59,5 +59,8 @@ module.exports = {
         }
 
         fs.renameSync(path, modifier(path));
+    },
+    replaceAll: (input, find, replace) => {
+        return input.replace(new RegExp(find, 'g'), replace);
     }
 };

@@ -7,10 +7,11 @@ if (!os.homedir) {
     };
 }
 var nedb = require('nedb');
-var db = [
-    'credentials'
-];
-var Promise = require('bluebird');
+var db = {
+    credentials: undefined
+};
+// var Promise = require('bluebird');
+import * as Promise from 'bluebird';
 Promise.onPossiblyUnhandledRejection((error) => {
     throw error;
 });
@@ -33,9 +34,9 @@ module.exports = (SERVICE_NAME) => {
                     default:
                         path = os.homedir() + `/usr/local/share/${SERVICE_NAME}/wifi-setup`;
                 }
-                db.forEach((collection) => {
-                    db[collection] = new nedb({filename: `${path}/${collection}`});
-                });
+                for (let i in db) {
+                    db[i] = new nedb({filename: `${path}/${i}`});
+                }
 
                 resolve();
             });

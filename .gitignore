@@ -5,3 +5,4 @@ bower_components
 modules/resources/**.css
 **/.sass-cache/**
 build
+typings

@@ -3,13 +3,21 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 
-var babel;
-gulp.task('babel', function () {
-    if (!babel) {
-        babel = require('gulp-babel');
+let typescript;
+let tsProject;
+let sourcemaps;
+gulp.task('typescript', () => {
+    if (!typescript) {
+        typescript = require('gulp-typescript');
+        tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});
+        sourcemaps = require('gulp-sourcemaps');
     }
-    return gulp.src('src/**/*.babel.js')
-            .pipe(babel({presets: ['es2015']}))
+    let tsResult = tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(typescript(tsProject));
+
+    return tsResult.js
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest('build'));
 });
 
@@ -64,13 +72,13 @@ gulp.task('clean', function () {
 gulp.task('copy', ['copy-html', 'copy-css', 'copy-fonts', 'copy-fill', 'copy-bower']);
 
 gulp.task('watch', function () {
-    gulp.watch(['src/**/*.babel.js'], ['babel']);
+    gulp.watch(['src/**/*.ts'], ['typescript']);
     gulp.watch(['src/**/*.scss', 'src/**/*.css'], ['sass']);
     gulp.watch(['src/**/**'], ['copy']);
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', ['babel', 'sass', 'copy'], callback);
+    runSequence('clean', ['typescript', 'sass', 'copy'], callback);
 });
 
 gulp.task('dev', ['build', 'watch']);

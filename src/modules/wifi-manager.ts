@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
-var utils = require('./utils');
+var Utils = require('./utils');
 
 var noSudoMessage = `The wifi-setup module requires root permissions in order to modify system config files.\n
     Please try running node as root`;
@@ -120,13 +120,13 @@ module.exports = () => {
                     return new Promise((resolve, reject) => {
                         try {
                             if (fs.readFileSync(wifi.configFiles.defaultHostapd.path).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(wifi.configFiles.defaultHostapd.path);
+                                Utils.backupFile(wifi.configFiles.defaultHostapd.path);
                             }
                         } catch (e) {}
 
                         fs.readFile('./modules/hostapd.fill', (err, file) => {
-                            var defaultHostapdConf = file.toString();
-                            defaultHostapdConf = defaultHostapdConf.replaceAll('{{path}}', wifi.configFiles.hostapdConf.path);
+                            let defaultHostapdConf = file.toString();
+                            defaultHostapdConf = Utils.replaceAll(defaultHostapdConf, '{{path}}', wifi.configFiles.hostapdConf.path);
                             fs.writeFile(wifi.configFiles.defaultHostapd.path, defaultHostapdConf, (err) => {
                                 if (err) {
                                     reject(err);
@@ -139,7 +139,7 @@ module.exports = () => {
                 },
                 setClient: () => {
                     return new Promise((resolve) => {
-                        utils.backupFile(wifi.configFiles.defaultHostapd.path + '.back', (path) => {
+                        Utils.backupFile(wifi.configFiles.defaultHostapd.path + '.back', (path) => {
                             return path.split('.back')[0];
                         });
                         resolve();
@@ -152,7 +152,7 @@ module.exports = () => {
                     return new Promise((resolve, reject) => {
                         try {
                             if (fs.readFileSync(wifi.configFiles.hostapdConf.path).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(wifi.configFiles.hostapdConf.path);
+                                Utils.backupFile(wifi.configFiles.hostapdConf.path);
                             }
                         } catch (e) {}
 
@@ -170,9 +170,9 @@ module.exports = () => {
                             let driver = results[1] || 'rtl871xdrv';
 
                             var hostapdConf = file.toString();
-                            hostapdConf = hostapdConf.replaceAll('{{SSID}}', SSID);
-                            hostapdConf = hostapdConf.replaceAll('{{password}}', password);
-                            hostapdConf = hostapdConf.replaceAll('{{driver}}', driver);
+                            hostapdConf = Utils.replaceAll(hostapdConf, '{{SSID}}', SSID);
+                            hostapdConf = Utils.replaceAll(hostapdConf, '{{password}}', password);
+                            hostapdConf = Utils.replaceAll(hostapdConf, '{{driver}}', driver);
                             fs.writeFile(wifi.configFiles.hostapdConf.path, hostapdConf, (err) => {
                                 if (err) {
                                     reject(err);
@@ -185,23 +185,12 @@ module.exports = () => {
                 },
                 setClient: () => {
                     return new Promise((resolve) => {
-                        utils.backupFile(wifi.configFiles.hostapdConf.path + '.back', (path) => {
+                        Utils.backupFile(wifi.configFiles.hostapdConf.path + '.back', (path) => {
                             return path.split('.back')[0];
                         });
                         resolve();
                     });
                 }
-            },
-            getDriver: () => {
-                return new Promise((resolve, reject) => {
-                    exec('basename $( readlink /sys/class/net/wlan0/device/driver )', (err, stdout) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            resolve(stdout);
-                        }
-                    });
-                });
             },
             interfaces: {
                 path: '/etc/network/interfaces',
@@ -209,14 +198,14 @@ module.exports = () => {
                     return new Promise((resolve, reject) => {
                         try {
                             if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(wifi.configFiles.interfaces.path);
+                                Utils.backupFile(wifi.configFiles.interfaces.path);
                             }
                         } catch (e) {}
 
                         fs.readFile('./modules/interfaces.ap.fill', (err, file) => {
                             var interfaces = file.toString();
-                            interfaces = interfaces.replaceAll('{{IP}}', '192.168.42.1');
-                            interfaces = interfaces.replaceAll('{{hostapd}}', wifi.configFiles.hostapdConf.path);
+                            interfaces = Utils.replaceAll(interfaces, '{{IP}}', '192.168.42.1');
+                            interfaces = Utils.replaceAll(interfaces, '{{hostapd}}', wifi.configFiles.hostapdConf.path);
                             fs.writeFile(wifi.configFiles.interfaces.path, interfaces, (err) => {
                                 if (err) {
                                     reject(err);
@@ -231,14 +220,14 @@ module.exports = () => {
                     return new Promise((resolve, reject) => {
                         try {
                             if (fs.readFileSync(wifi.configFiles.interfaces.path).toString().indexOf('# wifi-setup config') === -1) {
-                                utils.backupFile(wifi.configFiles.interfaces.path);
+                                Utils.backupFile(wifi.configFiles.interfaces.path);
                             }
                         } catch (e) {}
 
                         fs.readFile('./modules/interfaces.client.fill', (err, file) => {
                             var interfaces = file.toString();
-                            interfaces = interfaces.replaceAll('{{SSID}}', SSID);
-                            interfaces = interfaces.replaceAll('{{password}}', password);
+                            interfaces = Utils.replaceAll(interfaces, '{{SSID}}', SSID);
+                            interfaces = Utils.replaceAll(interfaces, '{{password}}', password);
                             fs.writeFile(wifi.configFiles.interfaces.path, interfaces, (err) => {
                                 if (err) {
                                     reject(err);
@@ -285,6 +274,17 @@ module.exports = () => {
                     });
                 }
             }
+        },
+        getDriver: () => {
+            return new Promise((resolve, reject) => {
+                exec('basename $( readlink /sys/class/net/wlan0/device/driver )', (err, stdout) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(stdout);
+                    }
+                });
+            });
         }
     };
 

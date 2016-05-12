@@ -1,9 +1,5 @@
 require('babel-polyfill');
 
-String.prototype.replaceAll = (find, replace) => {
-    return this.replace(new RegExp(find, 'g'), replace);
-};
-
 var bodyParser = require('body-parser');
 
 var database;
@@ -95,9 +91,9 @@ module.exports = (SERVICE_NAME, express, app, _database) => {
         },
 
         startConfigServer: () => {
-            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then((SSID, password) => {
+            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then((responses) => {
                 if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
-                    module.exports.callbacks.onAPstart(SSID, password);
+                    module.exports.callbacks.onAPstart(responses[0].SSID, responses[0].password);
                 }
             }).catch((errs) => {
                 console.log(errs);

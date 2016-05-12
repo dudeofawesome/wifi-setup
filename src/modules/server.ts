@@ -1,4 +1,5 @@
 var fs = require('fs');
+const Utils = require('./utils');
 
 var SERVICE_NAME = 'DEFAULT';
 
@@ -13,10 +14,10 @@ module.exports = (callbacks) => {
                 server.app = app;
 
                 var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
-                configPage = configPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
+                configPage = Utils.replaceAll(configPage, '{{SERVICE_NAME}}', SERVICE_NAME);
 
                 var finishConfigPage = fs.readFileSync('./modules/pages/finish_configure.html').toString();
-                finishConfigPage = finishConfigPage.replaceAll('{{SERVICE_NAME}}', SERVICE_NAME);
+                finishConfigPage = Utils.replaceAll(finishConfigPage, '{{SERVICE_NAME}}', SERVICE_NAME);
 
                 app.use(express.static('./modules/pages/static'));
 

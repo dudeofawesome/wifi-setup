@@ -6,7 +6,7 @@ var runSequence = require('run-sequence');
 var typescript;
 var tsProject;
 var sourcemaps;
-gulp.task('typescript', () => {
+gulp.task('typescript', function () {
     if (!typescript) {
         typescript = require('gulp-typescript');
         tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});

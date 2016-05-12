@@ -3,16 +3,16 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 
-let typescript;
-let tsProject;
-let sourcemaps;
+var typescript;
+var tsProject;
+var sourcemaps;
 gulp.task('typescript', () => {
     if (!typescript) {
         typescript = require('gulp-typescript');
         tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});
         sourcemaps = require('gulp-sourcemaps');
     }
-    let tsResult = tsProject.src()
+    var tsResult = tsProject.src()
         .pipe(sourcemaps.init())
         .pipe(typescript(tsProject));
 

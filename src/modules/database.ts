@@ -10,7 +10,7 @@ var nedb = require('nedb');
 var db = {
     credentials: undefined
 };
-// var Promise = require('bluebird');
+
 import * as Promise from 'bluebird';
 Promise.onPossiblyUnhandledRejection((error) => {
     throw error;

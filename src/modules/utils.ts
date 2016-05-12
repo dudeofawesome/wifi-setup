@@ -1,10 +1,10 @@
-var fs = require('fs');
+import * as fs from 'fs';
 
-module.exports = {
+export class Utils {
     // NOTE: this is not cryptographically secure. Only use this for very unimportant passwords
     /* requirements = {lowercase: true, uppercase: true, numbers: true, symbols: true} */
     /* specialLists = {lowercase: "??", uppercase: "??", numbers: "??", symbols: "??"} */
-    generatePassword: (length, requirements, specialLists) => {
+    static generatePassword (length?, requirements?, specialLists?) {
         var lowercase = 'abcdefghijklmnopqrstuvwxyz';
         var uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var numbers = '0123456789';
@@ -50,8 +50,8 @@ module.exports = {
         }
 
         return password;
-    },
-    backupFile: (path, modifier) => {
+    };
+    static backupFile (path, modifier?) {
         if (!modifier) {
             modifier = (path) => {
                 return path += '.back';
@@ -59,8 +59,8 @@ module.exports = {
         }
 
         fs.renameSync(path, modifier(path));
-    },
-    replaceAll: (input, find, replace) => {
+    };
+    static replaceAll (input, find, replace) {
         return input.replace(new RegExp(find, 'g'), replace);
     }
 };

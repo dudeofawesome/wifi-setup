@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
-var Utils = require('./utils');
+import {Utils} from './utils';
 
 var noSudoMessage = `The wifi-setup module requires root permissions in order to modify system config files.\n
     Please try running node as root`;

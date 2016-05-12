@@ -1,5 +1,5 @@
 var fs = require('fs');
-const Utils = require('./utils');
+import {Utils} from './utils';
 
 var SERVICE_NAME = 'DEFAULT';
 

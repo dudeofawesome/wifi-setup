@@ -58,7 +58,11 @@ export class Utils {
             };
         }
 
-        fs.renameSync(path, modifier(path));
+        try {
+            fs.renameSync(path, modifier(path));
+        } catch (err) {
+            console.error(err);
+        }
     };
     static replaceAll (input, find, replace) {
         return input.replace(new RegExp(find, 'g'), replace);

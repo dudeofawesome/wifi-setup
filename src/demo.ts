@@ -1,4 +1,4 @@
-var WIFIsetup = require('./main')('DEFAULT');
+var WIFIsetup = require('./main')('Edyza', '123edyza');
 
 WIFIsetup.init({
     onAPstart: function (SSID, password) {

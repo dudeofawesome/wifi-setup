@@ -28,7 +28,7 @@ var server = require('./modules/server')({
     }
 });
 
-module.exports = (SERVICE_NAME, express, app, _database) => {
+module.exports = (SERVICE_NAME, password, express, app, _database) => {
     if (!express) {
         express = require('express');
     }
@@ -66,6 +66,8 @@ module.exports = (SERVICE_NAME, express, app, _database) => {
         start: () => {
             return new Promise((resolve) => {
                 database.getWifiCreds().then((creds) => {
+                    console.log('creds');
+                    console.log(creds);
                     wifiManager.client.connect(creds.SSID, creds.password).then(() => {
                         if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
                             module.exports.callbacks.onConnectToWIFI(creds.SSID, '10.0.0.1');
@@ -94,7 +96,7 @@ module.exports = (SERVICE_NAME, express, app, _database) => {
         },
 
         startConfigServer: () => {
-            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, 'testtest'), server.start(8081)]).then((responses) => {
+            Promise.all([wifiManager.accessPoint.up(SERVICE_NAME, password), server.start(8081)]).then((responses) => {
                 if (module.exports.callbacks && module.exports.callbacks.onAPstart) {
                     module.exports.callbacks.onAPstart(responses[0].SSID, responses[0].password);
                 }

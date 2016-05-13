@@ -141,7 +141,6 @@ gulp.task('postinstall', function (callback) {
     if (!exec) {
         exec = require('child_process').exec;
     }
-    console.log(process.env);
     if (process.env.NODE_ENV !== 'production') {
         exec('bower install; typings install; gulp', function (err, stdout) {
             console.log(stdout);

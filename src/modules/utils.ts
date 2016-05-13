@@ -59,10 +59,9 @@ export class Utils {
         }
 
         try {
-            fs.renameSync(path, modifier(path));
-        } catch (err) {
-            console.error(err);
-        }
+            let file = fs.readFileSync(path);
+            fs.writeFileSync(modifier(path), file);
+        } catch (err) {}
     };
     static replaceAll (input, find, replace) {
         return input.replace(new RegExp(find, 'g'), replace);

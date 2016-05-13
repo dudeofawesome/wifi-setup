@@ -12,7 +12,7 @@ wpa_pairwise=TKIP
 rsn_pairwise=CCMP
 auth_algs=1
 macaddr_acl=0
-#driver={{driver}}
+driver={{driver}}
 
 # interface=wlan0
 # logger_syslog=-1

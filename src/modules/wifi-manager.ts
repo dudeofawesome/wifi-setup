@@ -172,7 +172,8 @@ module.exports = () => {
                         });
                         Promise.all([getHostapdFile, wifi.getDriver()]).then((results) => {
                             let file = results[0];
-                            let driver = results[1] || 'rtl871xdrv';
+                            // let driver = results[1] || 'rtl871xdrv';
+                            let driver = 'rtl871xdrv';
 
                             var hostapdConf = file.toString();
                             hostapdConf = Utils.replaceAll(hostapdConf, '{{SSID}}', SSID);

@@ -1,54 +1,54 @@
 {
-  "name": "wifi-setup",
-  "version": "0.0.0",
-  "description": "WiFi AP setup, particularly useful for IoT devices",
-  "main": "build/main.js",
-  "scripts": {
-    "test": "gulp build:tests; gulp test",
-    "postinstall": "gulp postinstall",
-    "build": "gulp",
-    "build:deploy": "gulp build:deploy",
-    "demo": "cd build; node demo"
-  },
-  "engines": {
-    "node": ">=0.10.38"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dudeofawesome/wifi-setup.git"
-  },
-  "keywords": [
-    "WiFi",
-    "AP",
-    "setup",
-    "configure"
-  ],
-  "author": "Louis Orleans <louis@orleans.io> (http://orleans.io/)",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/dudeofawesome/wifi-setup/issues"
-  },
-  "homepage": "https://github.com/dudeofawesome/wifi-setup",
-  "dependencies": {
-    "body-parser": "^1.12.3",
-    "es6-shim": "0.35.0",
-    "express": "^4.12.3",
-    "nedb": "^1.8.0"
-  },
-  "devDependencies": {
-    "bluebird": "^3.3.5",
-    "bower": "^1.7.9",
-    "chai": "^3.5.0",
-    "del": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-sass": "^2.3.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.13.4",
-    "mocha": "^2.4.5",
-    "run-sequence": "^1.1.5",
-    "tslint": "^3.10.1",
-    "typescript": "^1.8.10",
-    "typings": "^0.8.1"
-  }
+    "name": "wifi-setup",
+    "version": "0.0.0",
+    "description": "WiFi AP setup, particularly useful for IoT devices",
+    "main": "build/main.js",
+    "scripts": {
+        "test": "gulp build:tests; gulp test",
+        "postinstall": "gulp postinstall",
+        "build": "gulp",
+        "build:deploy": "gulp build:deploy",
+        "demo": "cd build; node demo"
+    },
+    "engines": {
+        "node": ">=0.10.38"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dudeofawesome/wifi-setup.git"
+    },
+    "keywords": [
+        "WiFi",
+        "AP",
+        "setup",
+        "configure"
+    ],
+    "author": "Louis Orleans <louis@orleans.io> (http://orleans.io/)",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/dudeofawesome/wifi-setup/issues"
+    },
+    "homepage": "https://github.com/dudeofawesome/wifi-setup",
+    "dependencies": {
+        "bluebird": "^3.3.5",
+        "body-parser": "^1.12.3",
+        "es6-shim": "0.35.0",
+        "express": "^4.12.3",
+        "nedb": "^1.8.0"
+    },
+    "devDependencies": {
+        "bower": "^1.7.9",
+        "chai": "^3.5.0",
+        "del": "^2.2.0",
+        "gulp": "^3.9.1",
+        "gulp-mocha": "^2.2.0",
+        "gulp-sass": "^2.3.1",
+        "gulp-sourcemaps": "^1.6.0",
+        "gulp-typescript": "^2.13.4",
+        "mocha": "^2.4.5",
+        "run-sequence": "^1.1.5",
+        "tslint": "^3.10.1",
+        "typescript": "^1.8.10",
+        "typings": "^0.8.1"
+    }
 }

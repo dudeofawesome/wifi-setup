@@ -1,5 +1,3 @@
-require('babel-polyfill');
-
 var bodyParser = require('body-parser');
 
 import * as Promise from 'bluebird';

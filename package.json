@@ -5,8 +5,9 @@
   "main": "build/main.js",
   "scripts": {
     "test": "gulp build:tests; gulp test",
-    "postinstall": "bower install; typings install; gulp",
+    "postinstall": "gulp postinstall",
     "build": "gulp",
+    "build:deploy": "gulp build:deploy",
     "demo": "cd build; node demo"
   },
   "engines": {

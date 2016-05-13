@@ -54,6 +54,24 @@ gulp.task('build:tests', ['build:typescript:tests']);
 
 gulp.task('build:dev', ['build:typescript', 'build:tests']);
 
+var exec;
+gulp.task('build:deploy', ['default'], function (callback) {
+    if (!exec) {
+        exec = require('child_process').exec;
+    }
+    var commands =
+        'cd ../; mkdir wifi-setup-deploy; ' +
+        'cd wifi-setup-deploy; ' +
+        'git clone ../wifi-setup; cd wifi-setup; ' +
+        'NODE_ENV="production" npm install --production; ' +
+        'cp -R ../../wifi-setup/build/ ./build;';
+
+    exec(commands, function (err, stdout) {
+        console.log(stdout);
+        callback(err);
+    });
+});
+
 var sass;
 gulp.task('sass', function () {
     if (!sass) {
@@ -95,8 +113,7 @@ gulp.task('copy:bower', function () {
 });
 
 var mocha;
-gulp.task('test', function (callback) {
-    var calledBack = false;
+gulp.task('test', function () {
     if (!mocha) {
         mocha = require('gulp-mocha');
     }
@@ -118,6 +135,21 @@ gulp.task('watch', function () {
     gulp.watch(['src/**/*.ts'], ['build:typescript']);
     gulp.watch(['src/**/*.scss', 'src/**/*.css'], ['sass']);
     gulp.watch(['src/**/**'], ['copy']);
+});
+
+gulp.task('postinstall', function (callback) {
+    if (!exec) {
+        exec = require('child_process').exec;
+    }
+    console.log(process.env);
+    if (process.env.NODE_ENV !== 'production') {
+        exec('bower install; typings install; gulp', function (err, stdout) {
+            console.log(stdout);
+            callback(err);
+        });
+    } else {
+        callback();
+    }
 });
 
 gulp.task('build', function (callback) {

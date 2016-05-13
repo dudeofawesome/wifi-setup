@@ -9,25 +9,38 @@ describe('Database', () => {
     it('should init', (done) => {
         database.init().then(() => {
             done()
-            it('should start', (done) => {
-                database.init().start(() => {
-                    done()
-                    it('should store and retrieve wifi credentials', (done) => {
-                        let testSSID = 'testSSID';
-                        let testPassword = 'testPassword';
-                        database.setWifiCreds(testSSID, testPassword).then(() => {
-                            database.getWifiCreds().then((creds) => {
-                                creds.SSID.should.equal(testSSID);
-                                creds.password.should.equal(testPassword);
-                                done();
-                                it('should stop', (done) => {
-                                    database.stop().then(() => done());
-                                });
-                            });
-                        })
+        });
+    });
+
+    it('should start', (done) => {
+        database.init().then(() => {
+            database.start().then(() => {
+                done()
+            }).catch(err => console.error(err));
+        });
+    });
+
+    it('should store and retrieve wifi credentials', (done) => {
+        database.init().then(() => {
+            database.start().then(() => {
+                let testSSID = 'testSSID';
+                let testPassword = 'testPassword';
+                database.setWifiCreds(testSSID, testPassword).then(() => {
+                    database.getWifiCreds().then((creds) => {
+                        creds.SSID.should.equal(testSSID);
+                        creds.password.should.equal(testPassword);
+                        done();
                     });
                 });
-            });
+            }).catch(err => console.error(err));
+        });
+    });
+
+    it('should stop', (done) => {
+        database.init().then(() => {
+            database.start().then(() => {
+                database.stop().then(() => done());
+            }).catch(err => console.error(err));
         });
     });
 });

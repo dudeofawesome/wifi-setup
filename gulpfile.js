@@ -12,7 +12,7 @@ gulp.task('build:typescript', function () {
         sourcemaps = require('gulp-sourcemaps');
     }
     if (!tsProject) {
-        tsProject = typescript.createProject('tsconfig.json', {sortOutput: true});
+        tsProject = typescript.createProject('tsconfig.json');
     }
     var tsResult = gulp.src([
             'src/**/*.ts',
@@ -35,7 +35,7 @@ gulp.task('build:typescript:tests', function () {
         sourcemaps = require('gulp-sourcemaps');
     }
     if (!tsProjectTests) {
-        tsProjectTests = typescript.createProject('tsconfig-tests.json', {sortOutput: true});
+        tsProjectTests = typescript.createProject('tsconfig-tests.json');
     }
     var tsResult = gulp.src([
             'src/**/tests/*.test.ts',
@@ -129,6 +129,13 @@ gulp.task('clean', function () {
     return del(['build']);
 });
 
+gulp.task('clean:deploy', function () {
+    if (!del) {
+        del = require('del');
+    }
+    return del(['../wifi-setup-deploy'], {force: true});
+});
+
 gulp.task('copy', ['copy:html', 'copy:css', 'copy:fonts', 'copy:fill', 'copy:bower']);
 
 gulp.task('watch', function () {
@@ -141,14 +148,10 @@ gulp.task('postinstall', function (callback) {
     if (!exec) {
         exec = require('child_process').exec;
     }
-    if (process.env.NODE_ENV !== 'production') {
-        exec('bower install; typings install; gulp', function (err, stdout) {
-            console.log(stdout);
-            callback(err);
-        });
-    } else {
-        callback();
-    }
+    exec('bower install; typings install; gulp', function (err, stdout) {
+        console.log(stdout);
+        callback(err);
+    });
 });
 
 gulp.task('build', function (callback) {

@@ -6,3 +6,6 @@ modules/resources/**.css
 **/.sass-cache/**
 typings
 src
+src/*
+src/**
+src/**/*

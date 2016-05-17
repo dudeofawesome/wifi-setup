@@ -3,9 +3,11 @@
     "version": "0.0.0",
     "description": "WiFi AP setup, particularly useful for IoT devices",
     "main": "build/main.js",
+    "typings": "build/main",
     "scripts": {
         "test": "gulp build:tests; gulp test",
         "postinstall": "gulp postinstall",
+        "prepublish": "gulp",
         "build": "gulp",
         "build:deploy": "gulp clean:deploy; gulp build:deploy",
         "demo": "cd build; node demo"

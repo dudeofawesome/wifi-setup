@@ -144,16 +144,6 @@ gulp.task('watch', function () {
     gulp.watch(['src/**/**'], ['copy']);
 });
 
-gulp.task('postinstall', function (callback) {
-    if (!exec) {
-        exec = require('child_process').exec;
-    }
-    exec('bower install; typings install; gulp', function (err, stdout) {
-        console.log(stdout);
-        callback(err);
-    });
-});
-
 gulp.task('build', function (callback) {
     runSequence('clean', ['build:typescript', 'sass', 'copy'], callback);
 });

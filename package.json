@@ -6,7 +6,7 @@
     "typings": "build/main",
     "scripts": {
         "test": "gulp build:tests; gulp test",
-        "postinstall": "gulp postinstall",
+        "postinstall": "bower install; typings install; gulp",
         "prepublish": "gulp",
         "build": "gulp",
         "build:deploy": "gulp clean:deploy; gulp build:deploy",

@@ -1,6 +1,3 @@
 # wifi-setup
 
-## Installation
-
-1. Make sure you have a newer version of hostapd installed
-  1. Follow [these instruction](https://communities.intel.com/thread/60081?start=0&tstart=0) if you don't
+It might be a good idea to use [process.setuid](https://nodejs.org/api/process.html#process_process_setuid_id) to bring the process' privileges back down below root

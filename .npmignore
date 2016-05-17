@@ -4,8 +4,5 @@ npm-debug.log
 bower_components
 modules/resources/**.css
 **/.sass-cache/**
-build
-build/*
-build/**
-build/**/*
 typings
+src

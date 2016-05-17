@@ -1,0 +1,27 @@
+{
+  "name": "wifi-setup",
+  "description": "WiFi AP setup, particularly useful for IoT devices",
+  "main": "build/main.js",
+  "authors": [
+    "Louis Orleans <louis@orleans.io> (http://orleans.io/)"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "WiFi",
+    "AP",
+    "setup",
+    "configure"
+  ],
+  "homepage": "https://github.com/dudeofawesome/WiFi_setup",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/modules/pages/static/resources/bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mdi": "^1.5.54"
+  }
+}

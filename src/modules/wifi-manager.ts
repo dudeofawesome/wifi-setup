@@ -1,11 +1,22 @@
-var exec = require('child_process').exec;
-var fs = require('fs');
+const exec = require('child_process').exec;
+const fs = require('fs');
 import {Utils} from './utils';
+import {Network} from '../types/network.type';
 
 import * as Promise from 'bluebird';
 Promise.onPossiblyUnhandledRejection((error) => {
     throw error;
 });
+
+function camelize (str) {
+    if (str.includes(' ')) {
+        return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+            return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+        }).replace(/\s+/g, '');
+    } else {
+        return str.toLowerCase();
+    }
+}
 
 var noSudoMessage = `The wifi-setup module requires root permissions in order to modify system config files.\n
     Please try running node as root`;
@@ -288,6 +299,43 @@ module.exports = () => {
                         reject(err);
                     } else {
                         resolve(stdout);
+                    }
+                });
+            });
+        },
+        scan: () => {
+            return new Promise((resolve, reject) => {
+                exec('iwlist wlan0 scan', (err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        res = res.split('wlan0     Scan completed :\n')[1];
+                        // Splitting long network list into one network per index
+                        let networks = res.split(/\s*Cell [0-9]{2,3} - /g);
+                        for (let i in networks) {
+                            // Splitting single network string into one key/value per line
+                            let splitNetwork = networks[i].split(/\n[\s]*/g);
+                            // console.log(splitNetwork);
+                            networks[i] = {};
+                            for (let j in splitNetwork) {
+                                // Splitting key/value string on the first colon
+                                let keyVal = splitNetwork[j].replace(':', '\n');
+                                keyVal = keyVal.split('\n');
+                                if (keyVal[0] && keyVal[0] !== '' && keyVal[0] !== ' ' && keyVal[1]) {
+                                    // Camel case ify key
+                                    keyVal[0] = camelize(keyVal[0]);
+                                    // Strip paranthesis from key
+                                    keyVal[0] = keyVal[0].replace('(', '');
+                                    keyVal[0] = keyVal[0].replace(')', '');
+                                    // Stripping whitespace and double quotes from start and end of values
+                                    keyVal[1] = keyVal[1].replace(/^[\s"]/, '');
+                                    keyVal[1] = keyVal[1].replace(/[\s"]$/, '');
+                                    networks[i][keyVal[0]] = keyVal[1];
+                                    networks[i] = new Network(networks[i]);
+                                }
+                            }
+                        }
+                        resolve(networks);
                     }
                 });
             });

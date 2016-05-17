@@ -1,5 +1,6 @@
-var fs = require('fs');
 import {Utils} from './utils';
+import {Question, QuestionTypes} from '../types/question.type';
+import {Network} from '../types/network.type';
 
 var SERVICE_NAME = 'DEFAULT';
 
@@ -8,7 +9,7 @@ Promise.onPossiblyUnhandledRejection((error) => {
     throw error;
 });
 
-module.exports = (callbacks) => {
+module.exports = (questions: Array<Question>, wifiManager, callbacks) => {
     var server = {
         app: undefined,
         appServer: undefined,
@@ -18,23 +19,21 @@ module.exports = (callbacks) => {
                 console.log('Initializing server');
                 server.app = app;
 
-                var configPage = fs.readFileSync('./modules/pages/configure.html').toString();
-                configPage = Utils.replaceAll(configPage, '{{SERVICE_NAME}}', SERVICE_NAME);
-
-                var finishConfigPage = fs.readFileSync('./modules/pages/finish_configure.html').toString();
-                finishConfigPage = Utils.replaceAll(finishConfigPage, '{{SERVICE_NAME}}', SERVICE_NAME);
-
-                app.use(express.static('./modules/pages/static'));
-
-                app.get('/', (req, res) => {
-                    res.send(configPage);
-                    if (callbacks && callbacks.onClientConfiguring) {
-                        callbacks.onClientConfiguring();
+                let questionsWithWiFi = [];
+                wifiManager.scan().then((networks: Array<Network>) => {
+                    let networkSSIDoptions = [];
+                    for (let i in networks) {
+                        networkSSIDoptions.push(networks[i].SSID);
                     }
-                });
+
+                    questionsWithWiFi = questions.concat([
+                        new Question('WiFi SSID', 'wifiSSID', QuestionTypes.SPINNER, networkSSIDoptions),
+                        new Question('WiFi password', 'wifiPassword', QuestionTypes.PASSWORD, /([\x00-\x7F]){8,63}/)
+                    ]);
+                })
 
                 app.get('/get-questions', function (req, res) {
-                    res.send(configPage);
+                    res.json(questionsWithWiFi);
                     if (callbacks && callbacks.onClientConfiguring) {
                         callbacks.onClientConfiguring();
                     }
@@ -42,7 +41,7 @@ module.exports = (callbacks) => {
 
                 app.post('/save-settings', (req, res) => {
                     console.log(req.body);
-                    res.send(finishConfigPage);
+                    res.json({message: 'success'});
                     if (callbacks && callbacks.onSetupComplete) {
                         callbacks.onSetupComplete(req.body);
                     }

@@ -1,3 +1,5 @@
+import {Question, QuestionTypes} from './types/question.type';
+
 var bodyParser = require('body-parser');
 
 import * as Promise from 'bluebird';
@@ -7,28 +9,9 @@ Promise.onPossiblyUnhandledRejection((error) => {
 
 var database;
 var wifiManager = require('./modules/wifi-manager')();
-var server = require('./modules/server')({
-    onClientConfiguring: () => {
-        console.log('onClientConfiguring');
-    },
-    onSetupComplete: (settings) => {
-        console.log('onSetupComplete');
-        console.log(settings);
-        wifiManager.accessPoint.down().then(() => {
-            wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(() => {
-                database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
-                if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
-                    module.exports.callbacks.onConnectToWIFI(settings.wifiSSID, '10.0.0.1');
-                }
-                server.stop();
-            }).catch(() => {
-                console.log('Failed to connect using new creds');
-            });
-        });
-    }
-});
+var server = require('./modules/server');
 
-module.exports = (SERVICE_NAME, password, express, app, _database) => {
+module.exports = (SERVICE_NAME: string, password: string, questions?: Array<Question>, express?, app?, _database?) => {
     if (!express) {
         express = require('express');
     }
@@ -42,6 +25,33 @@ module.exports = (SERVICE_NAME, password, express, app, _database) => {
             database.start();
         });
     }
+
+    if (!Array.isArray(questions)) {
+        if (!questions) {
+            questions = [];
+        }
+    }
+
+    server = server()(questions, wifiManager, {
+        onClientConfiguring: () => {
+            console.log('onClientConfiguring');
+        },
+        onSetupComplete: (settings) => {
+            console.log('onSetupComplete');
+            console.log(settings);
+            wifiManager.accessPoint.down().then(() => {
+                wifiManager.client.connect(settings.wifiSSID, settings.wifiPassword).then(() => {
+                    database.setWifiCreds(settings.wifiSSID, settings.wifiPassword);
+                    if (module.exports.callbacks && module.exports.callbacks.onConnectToWIFI) {
+                        module.exports.callbacks.onConnectToWIFI(settings.wifiSSID, '10.0.0.1');
+                    }
+                    server.stop();
+                }).catch(() => {
+                    console.log('Failed to connect using new creds');
+                });
+            });
+        }
+    });
 
     var wifiSetup = {
         init: (callbacks) => {

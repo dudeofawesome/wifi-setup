@@ -1,4 +1,20 @@
-var WIFIsetup = require('./main')('Edyza', '123edyza');
+import {Question, QuestionTypes} from './types/question.type';
+
+var WIFIsetup = require('./main')(`Edyza ${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`,
+    '123edyza',
+    [
+        new Question(
+            'First name',
+            'firstName',
+            QuestionTypes.TEXT
+        ),
+        new Question(
+            'Email',
+            'email',
+            QuestionTypes.EMAIL
+        )
+    ]
+);
 
 WIFIsetup.init({
     onAPstart: function (SSID, password) {

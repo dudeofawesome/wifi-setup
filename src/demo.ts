@@ -1,6 +1,6 @@
 import {Question, QuestionTypes} from './types/question.type';
 
-var WIFIsetup = require('./main')(`Edyza ${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`,
+var WIFIsetup = require('wifi-setup')(`Edyza ${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`,
     '123edyza',
     [
         new Question(

@@ -140,7 +140,7 @@ module.exports = () => {
                             }
                         } catch (e) {}
 
-                        fs.readFile('./modules/hostapd.fill', (err, file) => {
+                        fs.readFile(`${__dirname}/hostapd.fill`, (err, file) => {
                             let defaultHostapdConf = file.toString();
                             defaultHostapdConf = Utils.replaceAll(defaultHostapdConf, '{{path}}', wifi.configFiles.hostapdConf.path);
                             fs.writeFile(wifi.configFiles.defaultHostapd.path, defaultHostapdConf, (err) => {
@@ -173,7 +173,7 @@ module.exports = () => {
                         } catch (e) {}
 
                         let getHostapdFile = new Promise((resolve, reject) => {
-                            fs.readFile('./modules/hostapd.conf.fill', (err, file) => {
+                            fs.readFile(`${__dirname}/hostapd.conf.fill`, (err, file) => {
                                 if (err) {
                                     reject(err);
                                 } else {
@@ -219,7 +219,7 @@ module.exports = () => {
                             }
                         } catch (e) {}
 
-                        fs.readFile('./modules/interfaces.ap.fill', (err, file) => {
+                        fs.readFile(`${__dirname}/interfaces.ap.fill`, (err, file) => {
                             var interfaces = file.toString();
                             interfaces = Utils.replaceAll(interfaces, '{{IP}}', '192.168.42.1');
                             interfaces = Utils.replaceAll(interfaces, '{{hostapd}}', wifi.configFiles.hostapdConf.path);
@@ -241,7 +241,7 @@ module.exports = () => {
                             }
                         } catch (e) {}
 
-                        fs.readFile('./modules/interfaces.client.fill', (err, file) => {
+                        fs.readFile(`${__dirname}/interfaces.client.fill`, (err, file) => {
                             var interfaces = file.toString();
                             interfaces = Utils.replaceAll(interfaces, '{{SSID}}', SSID);
                             interfaces = Utils.replaceAll(interfaces, '{{password}}', password);

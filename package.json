@@ -1,6 +1,6 @@
 {
     "name": "wifi-setup",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "WiFi AP setup, particularly useful for IoT devices",
     "main": "build/main.js",
     "typings": "build/main",

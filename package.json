@@ -1,12 +1,11 @@
 {
     "name": "wifi-setup",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "WiFi AP setup, particularly useful for IoT devices",
     "main": "build/main.js",
     "typings": "build/main",
     "scripts": {
         "test": "gulp build:tests; gulp test",
-        "postinstall": "bower install",
         "prepublish": "gulp",
         "build": "gulp",
         "build:deploy": "gulp clean:deploy; gulp build:deploy",
@@ -39,7 +38,6 @@
         "nedb": "^1.8.0"
     },
     "devDependencies": {
-        "bower": "^1.7.9",
         "chai": "^3.5.0",
         "del": "^2.2.0",
         "gulp": "^3.9.1",

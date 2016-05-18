@@ -44,10 +44,11 @@ export class Network {
             this.timestamp = timestamp;
             this.capabilities = capabilities;
         } else {
+            console.log(SSID);
             let iwlistOut = SSID;
             this.SSID = iwlistOut.SSID || iwlistOut.ssid || iwlistOut.ESSID || iwlistOut.essid;
             this.BSSID = iwlistOut.ADDRESS || iwlistOut.Address || iwlistOut.address || iwlistOut.BSSID || iwlistOut.bssid;
-            this.frequency = parseFloat(iwlistOut.frequency.split(' ')[0]) * 10;
+            this.frequency = (iwlistOut.frequency) ? parseFloat(iwlistOut.frequency.split(' ')[0]) * 10 : undefined;
             this.level = iwlistOut.level || iwlistOut.signalLevel;
             // TODO: maybe implement this sometime in the future?
             this.timestamp = 0;

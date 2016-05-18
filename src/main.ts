@@ -32,7 +32,7 @@ module.exports = (SERVICE_NAME: string, password: string, questions?: Array<Ques
         }
     }
 
-    server = server()(questions, wifiManager, {
+    server = server(questions, wifiManager, {
         onClientConfiguring: () => {
             console.log('onClientConfiguring');
         },

@@ -23,16 +23,18 @@ module.exports = (questions: Array<Question>, wifiManager, callbacks) => {
                 wifiManager.scan().then((networks: Array<Network>) => {
                     let networkSSIDoptions = [];
                     for (let i in networks) {
-                        networkSSIDoptions.push(networks[i].SSID);
+                        if (networks[i].SSID) {
+                            networkSSIDoptions.push(networks[i].SSID);
+                        }
                     }
 
-                    questionsWithWiFi = questions.concat([
+                    questionsWithWiFi = [
                         new Question('WiFi SSID', 'wifiSSID', QuestionTypes.SPINNER, networkSSIDoptions),
                         new Question('WiFi password', 'wifiPassword', QuestionTypes.PASSWORD, /([\x00-\x7F]){8,63}/)
-                    ]);
+                    ].concat(questions);
                 })
 
-                app.get('/get-questions', function (req, res) {
+                app.get('/questions', function (req, res) {
                     res.json(questionsWithWiFi);
                     if (callbacks && callbacks.onClientConfiguring) {
                         callbacks.onClientConfiguring();

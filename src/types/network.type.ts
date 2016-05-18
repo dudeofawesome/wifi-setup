@@ -48,7 +48,7 @@ export class Network {
             let iwlistOut = SSID;
             this.SSID = iwlistOut.SSID || iwlistOut.ssid || iwlistOut.ESSID || iwlistOut.essid;
             this.BSSID = iwlistOut.ADDRESS || iwlistOut.Address || iwlistOut.address || iwlistOut.BSSID || iwlistOut.bssid;
-            this.frequency = (iwlistOut.frequency) ? parseFloat(iwlistOut.frequency.split(' ')[0]) * 10 : undefined;
+            this.frequency = (typeof iwlistOut.frequency === 'string') ? parseFloat(iwlistOut.frequency.split(' ')[0]) * 10 : iwlistOut.frequency;
             this.level = iwlistOut.level || iwlistOut.signalLevel;
             // TODO: maybe implement this sometime in the future?
             this.timestamp = 0;

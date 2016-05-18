@@ -40,8 +40,10 @@ export class Question {
         this.key = key;
         this.type = type;
         if (!Array.isArray(pattern)) {
-            this.pattern = pattern.toString();
-            this.pattern = this.pattern.substr(1, this.pattern.length - 2);
+            if (pattern) {
+                this.pattern = pattern.toString();
+                this.pattern = this.pattern.substr(1, this.pattern.length - 2);
+            }
         } else {
             this.options = pattern;
         }
